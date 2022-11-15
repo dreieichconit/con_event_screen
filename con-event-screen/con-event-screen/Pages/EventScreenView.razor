@@ -1,0 +1,19 @@
+﻿@inherits LayoutComponentBase
+@page "/event-screen"
+@using con_event_services.Interfaces
+@using con_event_screen.Shared.Components
+@inject IStateController Controller;
+@layout ScreenLayout
+
+<main>
+    <div class="app">
+        <Header></Header>
+        <Divider></Divider>
+        <ContentManager></ContentManager>
+        <Divider></Divider>
+        <Footer></Footer>
+    </div>
+</main>
+
+@code {
+}

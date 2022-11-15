@@ -1,0 +1,10 @@
+
+con-event-screen/con-event-api/obj/
+
+con-event-screen/con-event-services/obj/*
+con-event-screen/con-event-services/bin/*
+
+con-event-screen/con-event-screen/bin/*
+con-event-screen/con-event-screen/obj/*
+con-event-screen/con-event-db/obj/*
+con-event-screen/con-event-db/bin/*

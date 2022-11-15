@@ -1,0 +1,9 @@
+.clock{
+    font-size: 6rem;
+    font-weight: 800;
+    color: black;
+    font-family: Garamond;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}

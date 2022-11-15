@@ -1,0 +1,78 @@
+﻿@page "/marquee"
+@using con_event_db.Repositories
+@using con_event_services.Interfaces
+@using Microsoft.EntityFrameworkCore
+@inject IStateController Controller;
+
+<PageTitle>Marquee-Editor</PageTitle>
+
+<h1>Edit Marquee</h1>
+
+<div class="marquee-wrapper">
+    <div class="marquee-controls">
+        
+        <button class="btn btn-primary" @onclick="Load">Load</button>
+        <button class="btn btn-primary" @onclick="Add">Add</button>
+        <button class="btn btn-primary" @onclick="Save">Save</button>
+        <div>@Status</div>
+    </div>
+    
+    <div class="marquees-table">
+        <div class="marquee-line">
+            <div class="marquee-item">Text</div>
+            <div class="marquee-item">Order</div>
+        </div>
+        @foreach (var marquee in Marquees.OrderBy(x => x.Order))
+        {
+            <div class="marquee-line">
+                <div class="marquee-item">
+                    <input @bind-value="marquee.Text"/>
+                </div>
+                <div class="marquee-item">
+                    <input type="number" @bind-value="marquee.Order">
+                </div>
+                <div class="marquee-item">
+                    <button class="btn btn-secondary" @onclick="() => Delete(marquee)">Delete</button>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+
+
+@code {
+
+    private string Status { get; set; } = "";
+
+    private List<con_event_db.Models.Marquee> Marquees { get; set; } = new();
+
+    private void Delete(con_event_db.Models.Marquee marquee)
+    {
+        MarqueeRepository.Delete(marquee);
+    }
+    
+    private void Load()
+    {
+        Marquees = MarqueeRepository.Get().ToList();
+    }
+
+    private void Save()
+    {
+        Status = "";
+        MarqueeRepository.Update(Marquees);
+        Controller.TriggerMarquee();
+    }
+
+    private void Add()
+    {
+        Marquees.Add(new con_event_db.Models.Marquee()
+        {
+            Text = "Please enter a text!",
+            Order = Marquees.Count() + 1,
+        });
+        
+        Status = "You have unsaved changes!";
+    }
+
+}

@@ -1,0 +1,27 @@
+﻿@using con_event_services.Interfaces
+@using con_event_db.Repositories
+@using System.Linq;
+@inherits LayoutComponentBase
+@inject IStateController Controller
+
+
+<div class="footer">
+    <marquee>@Marquee</marquee>
+</div>
+
+@code {
+    
+    public string Marquee { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        UpdateMarquee(null, EventArgs.Empty);
+        Controller.MarqueeUpdated += UpdateMarquee;
+    }
+
+    private void UpdateMarquee(object? e, EventArgs? ee)
+    {
+        Marquee = string.Join(" // ", MarqueeRepository.Get().Select(x => x.Text));
+        InvokeAsync(StateHasChanged);
+    }
+}

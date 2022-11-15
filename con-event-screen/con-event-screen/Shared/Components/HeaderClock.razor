@@ -1,0 +1,20 @@
+﻿@using con_event_services.Interfaces
+@inherits LayoutComponentBase
+@inject IStateController Controller
+
+<div class="clock">@Time</div>
+
+@code {
+    private string Time { get; set; } = "Initializing...";
+    
+    protected override async Task OnInitializedAsync()
+    {
+        Controller.SecondElapsed += UpdateClock;
+    }
+
+    private void UpdateClock(object? e, EventArgs? ee)
+    {
+        Time = DateTime.Now.ToString("HH:mm:ss");
+        InvokeAsync(StateHasChanged);
+    }
+}
