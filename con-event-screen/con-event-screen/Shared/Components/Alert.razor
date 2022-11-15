@@ -1,0 +1,208 @@
+﻿@using con_event_services.Interfaces
+@using System.Text
+@inherits LayoutComponentBase;
+@inject IStateController Controller;
+
+<div class="alert-overlay" style="@OverlayStyle">
+    <div class="@TopClass">
+        <div class="alert-skew-container">
+            <div class="alert-skew traverse-left">
+                @for (int i = 0; i < 400; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        <div class="skew"></div>
+                    }
+                    else
+                    {
+                        <div class="skew-inv"></div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="alert-line"></div>
+        <div class="alert-skew-container">
+            <div class="alert-skew traverse-left">
+                @for (int i = 0; i < 400; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        <div class="skew"></div>
+                    }
+                    else
+                    {
+                        <div class="skew-inv"></div>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+    <div class="alert-bar-main">
+        <div class="title-wrapper">
+            <div class="title">
+                @Title
+            </div>
+        </div>
+        <div class="message-wrapper">
+            <div class="message">
+                @Message
+            </div>
+        </div>
+    </div>
+    <div class="@BottomClass">
+        <div class="alert-skew-container">
+            <div class="alert-skew traverse-right">
+                @for (int i = 0; i < 400; i++)
+                {
+                    if (i % 2 == 0)
+                    {
+                        <div class="skew"></div>
+                    }
+                    else
+                    {
+                        <div class="skew-inv"></div>
+                    }
+                }
+            </div>
+        </div>
+        <div class="alert-line"></div>
+       <div class="alert-skew-container">
+           <div class="alert-skew traverse-right">
+               @for (int i = 0; i < 400; i++)
+               {
+                   if (i % 2 == 0)
+                   {
+                       <div class="skew"></div>
+                   }
+                   else
+                   {
+                       <div class="skew-inv"></div>
+                   }
+               }
+           </div>
+       </div>
+    </div>
+</div>
+
+@code {
+
+    private string GenerateSkew()
+    {
+        var sb = new StringBuilder();
+        
+        for (int i = 0; i < 100; i++)
+        {
+            if (i % 2 == 0)
+                sb.AppendLine("<div class=\"skew\"></div>");
+            else
+                sb.AppendLine("<div class=\"skew-inv\"></div>");
+        }
+        
+        return sb.ToString();
+    }
+    
+    private string Title { get; set; }
+    
+    private string Message { get; set; }
+
+    private int AnimationState { get; set; } = 0;
+
+    private string TopAnimationState
+    {
+        get
+        {
+            return AnimationState switch
+            {
+                1 => "slide-in-left",
+                2 => "slide-out-left",
+                _ => ""
+            };
+        }
+    }
+    
+    private string MiddleAnimationState
+    {
+        get
+        {
+            return AnimationState switch
+            {
+                1 => "fade-in",
+                2 => "fade-out",
+                _ => ""
+                };
+        }
+    }
+    
+    private string BottomAnimationState
+    {
+        get
+        {
+            return AnimationState switch
+            {
+                1 => "slide-in-right",
+                2 => "slide-out-right",
+                _ => ""
+                };
+        }
+    }
+
+    private string TopClass =>  $"alert-bar {TopAnimationState}";
+
+    private string MiddleClass => $"alert-bar-main {MiddleAnimationState}";
+    
+    private string BottomClass => $"alert-bar {BottomAnimationState}";
+
+    private bool _visible = false;
+
+    private string OverlayStyle => _visible ? "display: flex" : "display: none";
+
+    protected override async Task OnInitializedAsync()
+    {
+        Controller.RedAlert += TriggerAlert;
+    }
+
+    private void TriggerAlert(object? e, EventArgs? ee)
+    {
+        if (e is Tuple<string, string> message)
+        {
+            Title = message.Item1;
+            Message = message.Item2;
+            _visible = true;
+            AnimationState = 1;
+        }
+        
+        InvokeAsync(StateHasChanged);
+
+        Task.Run(async () => await FadeOut(30));
+    }
+
+    private async Task FadeOut(int seconds)
+    {
+        var timer = new PeriodicTimer(TimeSpan.FromSeconds(seconds));
+
+        while (await timer.WaitForNextTickAsync(CancellationToken.None))
+        {
+            AnimationState = 2;
+            break;
+        }
+        
+        InvokeAsync(StateHasChanged);
+
+        await HideAfter(1500);
+    }
+
+    private async Task HideAfter(int seconds)
+    {
+        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(seconds));
+
+        while (await timer.WaitForNextTickAsync(CancellationToken.None))
+        {
+            Title = string.Empty;
+            Message = string.Empty;
+            _visible = false;
+            break;
+        }
+        
+        InvokeAsync(StateHasChanged);
+    }
+}

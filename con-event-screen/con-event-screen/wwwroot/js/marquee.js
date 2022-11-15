@@ -1,0 +1,2 @@
+﻿
+$('div.footer marquee').marquee();

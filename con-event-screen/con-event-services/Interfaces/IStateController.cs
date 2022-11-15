@@ -14,5 +14,5 @@ public interface IStateController
 
     public void TriggerMarquee();
 
-    public void TriggerAlert();
+    public void TriggerAlert(string title, string message);
 }

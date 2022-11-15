@@ -37,7 +37,7 @@ public static class MarqueeRepository
     {
         using var db = ScreenDbContext.Get();
 
-        db.Marquees.Remove(marquee);
+        db.Marquees.Remove(db.Marquees.First(x => x.Id == marquee.Id));
 
         db.SaveChanges();
     }

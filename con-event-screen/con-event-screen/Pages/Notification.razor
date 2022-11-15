@@ -1,0 +1,29 @@
+﻿@page "/Notification"
+@using con_event_services.Interfaces
+@inject IStateController Controller
+
+<h3>Trigger Red Alert</h3>
+
+<div class="wrapper">
+    <div class="title">Title</div>
+    <input type="text" @bind-value="Title"/>
+
+    <div class="title">Message</div>
+    <textarea @bind="Message"></textarea>
+    
+    <div class="splitter"></div>
+
+    <button class="btn btn-danger" @onclick="Fire">FIRE ALERT</button>
+</div>
+
+
+@code {
+    private string Title { get; set; } = "";
+
+    private string Message { get; set; } = "";
+
+    private void Fire()
+    {
+        Controller.TriggerAlert(Title, Message);
+    }
+}

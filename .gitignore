@@ -1,8 +1,13 @@
 
-con-event-screen/con-event-api/obj/
+con-event-screen/con-event-api/bin/*
+con-event-screen/con-event-api/obj/*
+
+con-event-screen/con-event-api.tests/bin/*
+con-event-screen/con-event-api.tests/obj/*
 
 con-event-screen/con-event-services/obj/*
 con-event-screen/con-event-services/bin/*
+
 
 con-event-screen/con-event-screen/bin/*
 con-event-screen/con-event-screen/obj/*

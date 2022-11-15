@@ -20,9 +20,9 @@ public class StateController : IStateController
     public event EventHandler? RedAlert;
     public event EventHandler? MarqueeUpdated;
 
-    public void TriggerAlert()
+    public void TriggerAlert(string title, string message)
     {
-        RedAlert?.Invoke(null, EventArgs.Empty);
+        RedAlert?.Invoke(new Tuple<string, string>(title, message), EventArgs.Empty);
     }
 
     public void TriggerMarquee()

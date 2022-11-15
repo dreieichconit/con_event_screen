@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "con-event-services", "con-e
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "con-event-db", "con-event-db\con-event-db.csproj", "{45E17DAE-0CB5-4E59-A249-0D9481BAA555}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "con-event-api.tests", "con-event-api.tests\con-event-api.tests.csproj", "{042B24EA-4A3F-4D51-AB02-E153E43214C8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{45E17DAE-0CB5-4E59-A249-0D9481BAA555}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{45E17DAE-0CB5-4E59-A249-0D9481BAA555}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{45E17DAE-0CB5-4E59-A249-0D9481BAA555}.Release|Any CPU.Build.0 = Release|Any CPU
+		{042B24EA-4A3F-4D51-AB02-E153E43214C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{042B24EA-4A3F-4D51-AB02-E153E43214C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{042B24EA-4A3F-4D51-AB02-E153E43214C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{042B24EA-4A3F-4D51-AB02-E153E43214C8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -23,5 +23,24 @@
 
 .marquee-item{
     min-width: 30%;
+    margin: 0.5rem;
+}
+
+.marquee-text{
+    width: 50%;
+    margin: 0.5rem;
+}
+
+.wide{
+    width: 100%;
+}
+
+.bold{
+    font-weight: 800;
+    font-size: 1.5rem;
+}
+
+.splitter{
+    border-bottom: 2px solid black;
     margin: 1rem;
 }

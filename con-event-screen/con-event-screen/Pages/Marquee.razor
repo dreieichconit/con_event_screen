@@ -16,17 +16,18 @@
         <button class="btn btn-primary" @onclick="Save">Save</button>
         <div>@Status</div>
     </div>
-    
+    <div class="splitter"></div>
     <div class="marquees-table">
         <div class="marquee-line">
-            <div class="marquee-item">Text</div>
-            <div class="marquee-item">Order</div>
+            <div class="marquee-text bold">Text</div>
+            <div class="marquee-item bold">Order</div>
+            <div class="marquee-item bold">Actions</div>
         </div>
         @foreach (var marquee in Marquees.OrderBy(x => x.Order))
         {
             <div class="marquee-line">
-                <div class="marquee-item">
-                    <input @bind-value="marquee.Text"/>
+                <div class="marquee-text">
+                    <input class="wide" @bind-value="marquee.Text"/>
                 </div>
                 <div class="marquee-item">
                     <input type="number" @bind-value="marquee.Order">
@@ -39,8 +40,6 @@
     </div>
 </div>
 
-
-
 @code {
 
     private string Status { get; set; } = "";
@@ -50,6 +49,8 @@
     private void Delete(con_event_db.Models.Marquee marquee)
     {
         MarqueeRepository.Delete(marquee);
+        Marquees.Remove(marquee);
+        Controller.TriggerMarquee();
     }
     
     private void Load()
@@ -74,5 +75,4 @@
         
         Status = "You have unsaved changes!";
     }
-
 }

@@ -1,0 +1,25 @@
+﻿.wrapper{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 50%;
+}
+
+.splitter{
+    height: 2%;
+    margin: 2rem;
+}
+
+#input{
+    width: 100%;
+    margin: 0.5rem;
+}
+
+#textarea{
+    margin: 0.5rem;
+}
+
+.title{
+    font-weight: 1000;
+    margin-top: 1rem;
+}
