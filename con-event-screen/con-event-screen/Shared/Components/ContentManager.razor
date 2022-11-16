@@ -3,10 +3,42 @@
 @inject IStateController Controller
 
 <div class="contentManager">
-    <h3>ContentManager</h3>
+    <ImageViewer Src="@PlanSrc" Visible="@IsPlanVisible"></ImageViewer>
+    <GamesViewer Visible="@IsGamesVisible" Order="1"></GamesViewer>
 </div>
 
 
 @code {
+
+    private int _visibleState = 1;
     
+    private bool IsPlanVisible => _visibleState == 0;
+
+    private bool IsGamesVisible => _visibleState == 1;
+
+    private bool IsVendorsVisible => _visibleState == 2;
+
+    private bool IsProgramVisible => _visibleState == 3;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Controller.HalfMinuteElapsed += TriggerSwitch;
+    }
+
+    private void TriggerSwitch(object? e, EventArgs ee)
+    {
+        if (_visibleState < 1)
+        {
+            _visibleState++;
+        }
+        else
+        {
+            _visibleState = 0;
+        }
+
+        Controller.TriggerContentChanged(_visibleState);
+        InvokeAsync(StateHasChanged);
+    }
+    
+    private string PlanSrc { get; set; } = @".\img\plan.png";
 }

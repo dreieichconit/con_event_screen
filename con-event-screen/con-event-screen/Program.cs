@@ -5,15 +5,19 @@ using con_event_services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
 
+Log.Logger = new LoggerConfiguration()
+    .WriteTo.Trace()
+    .WriteTo.Console()
+    .MinimumLevel.Debug()
+    .CreateLogger();
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<WeatherForecastService>();
 
 builder.Services.AddDbContext<ScreenDbContext>(options => options.UseSqlite("Data Source=ApiDb.db"));
-
 builder.Services.AddSingleton<IStateController, StateController>();
 
 var app = builder.Build();
@@ -35,9 +39,5 @@ app.UseRouting();
 app.MapBlazorHub();
 app.MapFallbackToPage("/_Host");
 
-Log.Logger = new LoggerConfiguration()
-    .WriteTo.Trace()
-    .WriteTo.Console()
-    .CreateLogger();
 
 app.Run();

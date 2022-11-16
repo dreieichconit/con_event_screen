@@ -11,91 +11,93 @@ public class ConTable
         public string TableName { get; set; }
 
         [JsonProperty("con_table_group")]
-        public string con_table_group { get; set; }
+        public string TableGroup { get; set; }
 
         [JsonProperty("con_table_size")]
-        public string con_table_size { get; set; }
+        public string TableSize { get; set; }
 
         [JsonProperty("con_convention_id")]
-        public string con_convention_id { get; set; }
+        public string ConventionId { get; set; }
 
         [JsonProperty("con_table_enabled")]
-        public string con_table_enabled { get; set; }
+        public string TableEnabled { get; set; }
     }
 
     public class ConConventionRpgTag
     {
 
         [JsonProperty("con_convention_rpg_tag_assign_id")]
-        public string con_convention_rpg_tag_assign_id { get; set; }
+        public string TagAssignId { get; set; }
 
         [JsonProperty("con_convention_rpg_tag_id")]
-        public string con_convention_rpg_tag_id { get; set; }
+        public string TagId { get; set; }
     }
 
     public class Game
     {
 
         [JsonProperty("con_convention_rpg_id")]
-        public string con_convention_rpg_id { get; set; }
+        public string Id { get; set; }
 
         [JsonProperty("con_convention_rpg_title")]
-        public string con_convention_rpg_title { get; set; }
+        public string Title { get; set; }
 
         [JsonProperty("con_convention_rpg_system")]
-        public string con_convention_rpg_system { get; set; }
+        public string System { get; set; }
 
         [JsonProperty("con_convention_rpg_duration")]
-        public string con_convention_rpg_duration { get; set; }
+        public string Duration { get; set; }
 
         [JsonProperty("con_convention_rpg_player_min")]
-        public string con_convention_rpg_player_min { get; set; }
+        public string MinimumPlayers { get; set; }
 
         [JsonProperty("con_convention_rpg_player_max")]
-        public string con_convention_rpg_player_max { get; set; }
+        public string MaximumPlayers { get; set; }
 
         [JsonProperty("con_convention_rpg_chars")]
-        public string con_convention_rpg_chars { get; set; }
+        public string Characters { get; set; }
 
         [JsonProperty("con_convention_rpg_teaser")]
-        public string con_convention_rpg_teaser { get; set; }
+        public string Teaser { get; set; }
 
         [JsonProperty("con_convention_rpg_discord_link")]
-        public object con_convention_rpg_discord_link { get; set; }
+        public object DiscordLink { get; set; }
 
         [JsonProperty("con_convention_rpg_alias_master")]
-        public object con_convention_rpg_alias_master { get; set; }
+        public object GameMasterAlias { get; set; }
 
         [JsonProperty("con_convention_rpg_alias_discord")]
-        public object con_convention_rpg_alias_discord { get; set; }
+        public object GameMasterDiscordAlias { get; set; }
 
         [JsonProperty("con_convention_rpg_start_ts")]
-        public string con_convention_rpg_start_ts { get; set; }
+        public string StartDate { get; set; }
+
+        public DateTime StartStamp => DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)).DateTime;
 
         [JsonProperty("con_user_full")]
-        public string con_user_full { get; set; }
+        public string FullName { get; set; }
 
         [JsonProperty("con_convention_rpg_publish")]
         public string con_convention_rpg_publish { get; set; }
 
         [JsonProperty("con_table_id")]
-        public string con_table_id { get; set; }
+        public string TableId { get; set; }
 
         [JsonProperty("con_convention_rpg_secret")]
-        public string con_convention_rpg_secret { get; set; }
+        public string GameSecret { get; set; }
 
         [JsonProperty("con_convention_rpg_player_joined")]
-        public string con_convention_rpg_player_joined { get; set; }
+        public string PlayersJoined { get; set; }
 
         [JsonProperty("con_convention_rpg_start_string")]
-        public string con_convention_rpg_start_string { get; set; }
+        public string FormatedStartDate { get; set; }
 
         [JsonProperty("con_table")]
-        public ConTable con_table { get; set; }
+        public ConTable Table { get; set; }
 
         [JsonProperty("con_convention_gamemaster_online")]
-        public bool con_convention_gamemaster_online { get; set; }
+        public bool OnlineGameMaster { get; set; }
 
         [JsonProperty("con_convention_rpg_tags")]
-        public IList<ConConventionRpgTag> con_convention_rpg_tags { get; set; }
+        public IList<ConConventionRpgTag> Tags { get; set; }
     }

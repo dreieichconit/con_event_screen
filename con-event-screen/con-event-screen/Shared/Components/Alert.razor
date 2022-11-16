@@ -85,21 +85,6 @@
 </div>
 
 @code {
-
-    private string GenerateSkew()
-    {
-        var sb = new StringBuilder();
-        
-        for (int i = 0; i < 100; i++)
-        {
-            if (i % 2 == 0)
-                sb.AppendLine("<div class=\"skew\"></div>");
-            else
-                sb.AppendLine("<div class=\"skew-inv\"></div>");
-        }
-        
-        return sb.ToString();
-    }
     
     private string Title { get; set; }
     
@@ -191,9 +176,9 @@
         await HideAfter(1500);
     }
 
-    private async Task HideAfter(int seconds)
+    private async Task HideAfter(int milliSeconds)
     {
-        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(seconds));
+        var timer = new PeriodicTimer(TimeSpan.FromMilliseconds(milliSeconds));
 
         while (await timer.WaitForNextTickAsync(CancellationToken.None))
         {

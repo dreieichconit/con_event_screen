@@ -1,0 +1,41 @@
+﻿.game-row{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 0.5rem;
+}
+
+.game-info{
+    font-family: Garamond;
+    font-weight: 1000;
+    font-size: 3rem;
+}
+
+.w10{
+    width: 10%;
+}
+
+.w12{
+    width: 12%;
+}
+
+.w14{
+    width: 14%;
+}
+
+.w22{
+    width: 22%;
+}
+
+.w30{
+    width: 30%;
+}
+
+.w40{
+    width: 40%;
+}
+
+.centered{
+    display: flex;
+    justify-content: center;
+}

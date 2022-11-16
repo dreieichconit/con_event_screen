@@ -12,7 +12,11 @@ public interface IStateController
 
     public event EventHandler? MarqueeUpdated;
 
+    public event EventHandler? ContentChanged;
+
     public void TriggerMarquee();
 
     public void TriggerAlert(string title, string message);
+
+    public void TriggerContentChanged(int currentType);
 }

@@ -1,0 +1,59 @@
+﻿.games-wrapper{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.table-row{
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.table-title{
+    font-family: Garamond;
+    font-weight: 1000;
+    font-size: 4rem;
+}
+
+.page-title{
+    width: 100%;
+    color: var(--primary-color);
+}
+
+.game-divider{
+    height: 2px;
+    width: 100%;
+    border-bottom: 2px solid var(--primary-color);
+}
+
+.w10{
+    width: 10%;
+}
+
+.w12{
+    width: 12%;
+}
+
+.w14{
+    width: 14%;
+}
+
+.w22{
+    width: 22%;
+}
+
+.w30{
+    width: 30%;
+}
+
+.w40{
+    width: 40%;
+}
+
+.centered{
+    display: flex;
+    justify-content: center;
+}

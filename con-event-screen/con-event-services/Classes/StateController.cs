@@ -19,6 +19,12 @@ public class StateController : IStateController
     public event EventHandler? MinuteElapsed;
     public event EventHandler? RedAlert;
     public event EventHandler? MarqueeUpdated;
+    public event EventHandler? ContentChanged;
+
+    public void TriggerContentChanged(int currentType)
+    {
+        ContentChanged?.Invoke(currentType, EventArgs.Empty);
+    }
 
     public void TriggerAlert(string title, string message)
     {
@@ -32,7 +38,6 @@ public class StateController : IStateController
     
     private async Task StartTimer()
     {
-
         while (await _timer.WaitForNextTickAsync(CancellationToken.None))
         {
             SecondElapsed?.Invoke(null, EventArgs.Empty);

@@ -1,0 +1,71 @@
+﻿@using con_event_services.Interfaces
+@using con_event_api.Classes
+@using con_event_api
+@using Serilog
+@inherits LayoutComponentBase
+@inject IStateController Controller;
+
+@if (Visible)
+{
+    <div class="games-wrapper" style="@Divstyle">
+        <h3 class="table-title page-title" style="@Divstyle">Anstehende Spielrunden</h3>
+        <div class="table-row">
+            <div class="table-title w30">
+                Titel
+            </div>
+            <div class="table-title w22">
+                System
+            </div>
+            <div class="table-title w12 centered">
+                Raum
+            </div>
+            <div class="table-title w10 centered">
+                Spieler
+            </div>
+            <div class="table-title w12 centered">
+                Start
+            </div>
+            <div class="table-title w14 centered">
+                Beginnt
+            </div>
+        </div>
+        <div class="game-divider"></div>
+        @foreach (var game in Games)
+        {
+            <GameInfo GameItem="game"></GameInfo>
+        }
+    </div>
+}
+
+@code {
+
+    private IEnumerable<Game> Games = new List<Game>();
+    
+    protected override async Task OnInitializedAsync()
+    {
+        await ReloadContent(0, EventArgs.Empty);
+        Controller.ContentChanged += async(e, ee) => await ReloadContent(e, ee);
+    }
+
+    private async Task ReloadContent(object? e, EventArgs ee)
+    {
+        if (e is int order)
+        {
+            if (order == Order - 1)
+            {
+                Log.Debug("Triggering Reload of Games List");
+                var allGames = await ConservicesRepository.GetGamesAsync();
+                Games = allGames.Where(x => x.StartStamp > DateTime.Now).OrderBy(x => x.StartStamp).Take(5);
+                InvokeAsync(StateHasChanged);
+            }
+        }
+    }
+    
+    [Parameter]
+    public int Order { get; set; }
+    
+    [Parameter]
+    public bool Visible { get; set; }
+
+    private string Divstyle => Visible ? "display: flex" : "display: hidden";
+}

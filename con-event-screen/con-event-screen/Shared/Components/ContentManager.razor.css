@@ -1,6 +1,8 @@
 .contentManager{
     display: flex;
-    flex: 1 1 auto;
-    border: 1px solid red;
+    height: 65%;
+    max-height: 65%;
     margin: 0 1rem;
+    justify-content: center;
+    align-items: center;
 }

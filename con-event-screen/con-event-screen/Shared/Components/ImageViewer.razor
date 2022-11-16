@@ -1,0 +1,19 @@
+﻿@inherits LayoutComponentBase
+
+@if (Visible)
+{
+    <div class="image-wrapper">
+        <img src="@Src"/>
+    </div>
+    
+}
+
+@code {
+    
+    [Parameter]
+    public string? Src { get; set; }    
+    
+    [Parameter]
+    public bool Visible { get; set; }
+    
+}
