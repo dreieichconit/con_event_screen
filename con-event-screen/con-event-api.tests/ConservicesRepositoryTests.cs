@@ -9,6 +9,6 @@ public class ConservicesRepositoryTests
     [TestMethod]
     public void GetGames()
     {
-        var games = Task.Run(async () => await ConservicesRepository.GetGames()).Result;
+        var games = Task.Run(async () => await ConservicesRepository.GetGamesAsync()).Result;
     }
 }

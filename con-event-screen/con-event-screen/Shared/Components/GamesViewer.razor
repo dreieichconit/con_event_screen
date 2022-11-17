@@ -43,7 +43,7 @@
     
     protected override async Task OnInitializedAsync()
     {
-        await ReloadContent(0, EventArgs.Empty);
+        await ReloadContent(Order - 1, EventArgs.Empty);
         Controller.ContentChanged += async(e, ee) => await ReloadContent(e, ee);
     }
 
@@ -53,10 +53,17 @@
         {
             if (order == Order - 1)
             {
-                Log.Debug("Triggering Reload of Games List");
-                var allGames = await ConservicesRepository.GetGamesAsync();
-                Games = allGames.Where(x => x.StartStamp > DateTime.Now).OrderBy(x => x.StartStamp).Take(5);
-                InvokeAsync(StateHasChanged);
+                try
+                {
+                    Log.Debug("Triggering Reload of Games List");
+                    var allGames = await ConservicesRepository.GetGamesAsync();
+                    Games = allGames.Where(x => x.StartStamp > DateTime.Now).OrderBy(x => x.StartStamp).Take(5);
+                    InvokeAsync(StateHasChanged);
+                }
+                catch
+                {
+                   Log.Error("Could not Fetch Games List"); 
+                }
             }
         }
     }

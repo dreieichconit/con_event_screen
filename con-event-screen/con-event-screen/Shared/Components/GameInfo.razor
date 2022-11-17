@@ -46,7 +46,6 @@
 
         TimeUntil = $"{(_timeSpan.Hours).ToString().PadLeft(2, '0')}h " +
                     $"{(Math.Abs(_timeSpan.Minutes)).ToString().PadLeft(2, '0')}min";
-    // $"{(Math.Abs(_timeSpan.Seconds)).ToString().PadLeft(2, '0')}";
 
         InvokeAsync(StateHasChanged);
     }

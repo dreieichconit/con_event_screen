@@ -5,12 +5,14 @@
 <div class="contentManager">
     <ImageViewer Src="@PlanSrc" Visible="@IsPlanVisible"></ImageViewer>
     <GamesViewer Visible="@IsGamesVisible" Order="1"></GamesViewer>
+    <ImageViewer Src="@PlanSrc" Visible="@IsVendorsVisible"></ImageViewer>
+    <ProgramViewer Visible="@IsProgramVisible" Order="3"></ProgramViewer>
 </div>
 
 
 @code {
 
-    private int _visibleState = 1;
+    private int _visibleState = 3;
     
     private bool IsPlanVisible => _visibleState == 0;
 
@@ -27,7 +29,7 @@
 
     private void TriggerSwitch(object? e, EventArgs ee)
     {
-        if (_visibleState < 1)
+        if (_visibleState < 3)
         {
             _visibleState++;
         }
