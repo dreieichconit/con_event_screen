@@ -12,33 +12,34 @@
 
 @code {
 
-    private int _visibleState = 3;
+    private int VisibleState = 0;
     
-    private bool IsPlanVisible => _visibleState == 0;
+    private bool IsPlanVisible => VisibleState == 0;
 
-    private bool IsGamesVisible => _visibleState == 1;
+    private bool IsGamesVisible => VisibleState == 1;
 
-    private bool IsVendorsVisible => _visibleState == 2;
+    private bool IsVendorsVisible => VisibleState == 2;
 
-    private bool IsProgramVisible => _visibleState == 3;
+    private bool IsProgramVisible => VisibleState == 3;
 
     protected override async Task OnInitializedAsync()
     {
+        VisibleState = Controller.ContentState;
         Controller.HalfMinuteElapsed += TriggerSwitch;
     }
 
     private void TriggerSwitch(object? e, EventArgs ee)
     {
-        if (_visibleState < 3)
+        if (VisibleState < 3)
         {
-            _visibleState++;
+            Controller.TriggerContentChanged(VisibleState + 1);
         }
         else
         {
-            _visibleState = 0;
+            Controller.TriggerContentChanged(0);
         }
-
-        Controller.TriggerContentChanged(_visibleState);
+        
+        VisibleState = Controller.ContentState;
         InvokeAsync(StateHasChanged);
     }
     

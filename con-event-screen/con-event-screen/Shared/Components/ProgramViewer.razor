@@ -77,8 +77,8 @@
                 try
                 {
                     var allItems = await HomepageRepository.GetProgramAsync();
-                    CurrentItem = allItems.LastOrDefault(x => x.StartStamp < DateTime.Now);
-                    ProgramItems = allItems.Where(x => x.StartStamp > DateTime.Now).OrderBy(x => x.StartStamp).Take(2);
+                    CurrentItem = allItems.LastOrDefault(x => x.StartStamp < DateTime.UtcNow);
+                    ProgramItems = allItems.Where(x => x.StartStamp > DateTime.UtcNow).OrderBy(x => x.StartStamp).Take(2);
                 }
                 catch
                 {

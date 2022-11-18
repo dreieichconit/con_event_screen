@@ -1,21 +1,20 @@
 ﻿@using con_event_services.Interfaces
 @using con_event_db.Repositories
 @using System.Linq;
+@using System.Text
 @inherits LayoutComponentBase
 @inject IStateController Controller
 
 
 <div class="footer">
     <div class="marquee-bar">
-        <marquee behavior="scroll" direction="left" scrollamount="6">
-            <p>@Marquee</p>
-        </marquee>
+        @Marquee
     </div>
 </div>
 
 @code {
     
-    public string Marquee { get; set; }
+    public MarkupString Marquee { get; set; }
     
     protected override async Task OnInitializedAsync()
     {
@@ -25,7 +24,24 @@
 
     private void UpdateMarquee(object? e, EventArgs? ee)
     {
-        Marquee = string.Join(" // ", MarqueeRepository.Get().Select(x => x.Text));
+        Marquee = GenerateMarkup();
         InvokeAsync(StateHasChanged);
+    }
+
+    private MarkupString GenerateMarkup()
+    {
+        var sb = new StringBuilder();
+
+        sb.AppendLine("<marquee behavior=\"scroll\" direction=\"left\" scrollamount=\"6\">");
+
+        sb.AppendLine("<p>");
+
+        sb.AppendLine(string.Join(" // ", MarqueeRepository.Get().Select(x => x.Text)));
+        
+        sb.AppendLine("</p>");
+        
+        sb.AppendLine("</marquee>");
+
+        return new MarkupString(sb.ToString());
     }
 }

@@ -21,9 +21,12 @@ public class StateController : IStateController
     public event EventHandler? MarqueeUpdated;
     public event EventHandler? ContentChanged;
 
+    public int ContentState { get; set; } = 0;
+
     public void TriggerContentChanged(int currentType)
     {
-        ContentChanged?.Invoke(currentType, EventArgs.Empty);
+        ContentState = currentType;
+        ContentChanged?.Invoke(ContentState, EventArgs.Empty);
     }
 
     public void TriggerAlert(string title, string message)

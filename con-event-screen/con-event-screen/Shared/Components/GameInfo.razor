@@ -42,7 +42,7 @@
 
     private void CalculateDuration()
     {
-        _timeSpan = (DateTime.Now - GameItem.StartStamp);
+        _timeSpan = (DateTime.UtcNow - GameItem.StartStamp);
 
         TimeUntil = $"{(_timeSpan.Hours).ToString().PadLeft(2, '0')}h " +
                     $"{(Math.Abs(_timeSpan.Minutes)).ToString().PadLeft(2, '0')}min";
