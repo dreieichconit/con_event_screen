@@ -13,4 +13,8 @@
       <PackageReference Include="Serilog.Sinks.Trace" Version="3.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\con-event-api\con-event-api.csproj" />
+    </ItemGroup>
+
 </Project>

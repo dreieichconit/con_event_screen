@@ -48,10 +48,12 @@
 
 .traverse-left{
     animation: traverse-left 30s infinite;
+    animation-timing-function: linear;
 }
 
 .traverse-right{
     animation: traverse-right 30s infinite;
+    animation-timing-function: linear;
 }
 
 .alert-line{

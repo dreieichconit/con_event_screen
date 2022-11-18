@@ -19,6 +19,7 @@ builder.Services.AddServerSideBlazor();
 
 builder.Services.AddDbContext<ScreenDbContext>(options => options.UseSqlite("Data Source=ApiDb.db"));
 builder.Services.AddSingleton<IStateController, StateController>();
+builder.Services.AddSingleton<IContentController, ContentController>();
 
 var app = builder.Build();
 

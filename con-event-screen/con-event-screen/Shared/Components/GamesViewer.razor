@@ -1,9 +1,11 @@
 ﻿@using con_event_services.Interfaces
 @using con_event_api.Classes
 @using con_event_api
+@using con_event_services.Classes
 @using Serilog
 @inherits LayoutComponentBase
 @inject IStateController Controller;
+@inject IContentController Content;
 
 @if (Visible)
 {
@@ -30,7 +32,7 @@
             </div>
         </div>
         <div class="game-divider"></div>
-        @foreach (var game in Games)
+        @foreach (var game in Content.Games)
         {
             <GameInfo GameItem="game"></GameInfo>
         }
@@ -38,12 +40,9 @@
 }
 
 @code {
-
-    private IEnumerable<Game> Games = new List<Game>();
     
     protected override async Task OnInitializedAsync()
     {
-        await ReloadContent(Order - 1, EventArgs.Empty);
         Controller.ContentChanged += async(e, ee) => await ReloadContent(e, ee);
     }
 
@@ -53,17 +52,7 @@
         {
             if (order == Order - 1)
             {
-                try
-                {
-                    Log.Debug("Triggering Reload of Games List");
-                    var allGames = await ConservicesRepository.GetGamesAsync();
-                    Games = allGames.Where(x => x.StartStamp > DateTime.UtcNow).OrderBy(x => x.StartStamp).Take(5);
-                    InvokeAsync(StateHasChanged);
-                }
-                catch
-                {
-                   Log.Error("Could not Fetch Games List"); 
-                }
+                InvokeAsync(StateHasChanged);
             }
         }
     }

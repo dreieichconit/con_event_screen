@@ -3,7 +3,7 @@
 @inject IStateController Controller
 
 <div class="contentManager">
-    <ImageViewer Src="@PlanSrc" Visible="@IsPlanVisible"></ImageViewer>
+    <ImageViewer Src="@LogoSrc" Visible="@IsPlanVisible"></ImageViewer>
     <GamesViewer Visible="@IsGamesVisible" Order="1"></GamesViewer>
     <ImageViewer Src="@PlanSrc" Visible="@IsVendorsVisible"></ImageViewer>
     <ProgramViewer Visible="@IsProgramVisible" Order="3"></ProgramViewer>
@@ -44,4 +44,6 @@
     }
     
     private string PlanSrc { get; set; } = @".\img\plan.png";
+    
+    private string LogoSrc { get; set; } = @".\img\logo-main.png";
 }

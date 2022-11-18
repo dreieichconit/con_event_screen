@@ -5,26 +5,27 @@
 @using System.Web
 @inherits LayoutComponentBase
 @inject IStateController Controller
+@inject IContentController Content
 
 @if (Visible)
 {
     <div class="program-wrapper" style="@Divstyle">
         <h3 class="title-large page-title">Programm</h3>
         
-        @if (CurrentItem != null)
+        @if (Content.CurrentItem != null)
         {
             <h3 class="title-large overview-title">Es Läuft:</h3>
             <div class="program-item-wrapper">
                 <div class="program-item">
-                    <div class="program-item-title">@HttpUtility.HtmlDecode(CurrentItem.TitleDe)</div>
-                    <div class="program-item-description">@HttpUtility.HtmlDecode(CurrentItem.ShortDescriptionDe)</div>
+                    <div class="program-item-title">@HttpUtility.HtmlDecode(Content.CurrentItem.TitleDe)</div>
+                    <div class="program-item-description">@HttpUtility.HtmlDecode(Content.CurrentItem.ShortDescriptionDe)</div>
                 </div>
                 <div class="program-item">
                     <div class="program-item-title">
-                        @CurrentItem.FormattedTimeStamp
+                        @Content.CurrentItem.FormattedTimeStamp
                     </div>
                     <div class="program-item-description">
-                        @CurrentItem.location_group_de
+                        @Content.CurrentItem.location_group_de
                     </div>
                 </div>
             </div>
@@ -32,7 +33,7 @@
 
         <h3 class="title-large overview-title">Anstehend:</h3>
 
-        @foreach (var item in ProgramItems)
+        @foreach (var item in Content.ProgramItems)
         {
             <div class="program-item-wrapper">
                 <div class="program-item">
@@ -56,10 +57,7 @@
 
 
 @code {
-
-    private ProgramItem? CurrentItem;
-
-    private IEnumerable<ProgramItem> ProgramItems = new List<ProgramItem>();
+    
 
     protected override async Task OnInitializedAsync()
     {
@@ -73,18 +71,6 @@
         {
             if (order == Order - 1)
             {
-                Log.Debug("Triggering Reload of Program List");
-                try
-                {
-                    var allItems = await HomepageRepository.GetProgramAsync();
-                    CurrentItem = allItems.LastOrDefault(x => x.StartStamp < DateTime.UtcNow);
-                    ProgramItems = allItems.Where(x => x.StartStamp > DateTime.UtcNow).OrderBy(x => x.StartStamp).Take(2);
-                }
-                catch
-                {
-                    Log.Error("Could not Fetch Program List");
-                }
-                
                 InvokeAsync(StateHasChanged);
             }
         }
