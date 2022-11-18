@@ -39,3 +39,9 @@
     display: flex;
     justify-content: center;
 }
+
+.green{
+    font-family: Garamond-Bold !important;
+    color: green;
+    font-weight: bolder !important;
+}

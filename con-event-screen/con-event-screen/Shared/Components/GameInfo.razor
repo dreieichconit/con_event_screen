@@ -13,7 +13,7 @@
     <div class="game-info w12 centered">
         @GameItem.Table.TableName
     </div>
-    <div class="game-info w10 centered">
+    <div class="@PlayersClass">
         @Free
     </div>
     <div class="game-info w12 centered">
@@ -28,11 +28,15 @@
     
     protected override async Task OnInitializedAsync()
     {
-        Controller.SecondElapsed += (e, ee) => CalculateDuration();
+        CalculateDuration();
+        
+        // Controller.ContentChanged += (e, ee) => CalculateDuration();
     }
     
     [Parameter]
     public Game GameItem { get; set; }
+
+    public string PlayersClass => $"game-info w10 centered {(GameItem.IsPlacesLeft ? "green" : "")}";
 
     private string Free => $"{GameItem.PlayersJoined}/{GameItem.MaximumPlayers}";
     

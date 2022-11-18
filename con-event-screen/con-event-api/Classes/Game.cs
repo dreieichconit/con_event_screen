@@ -100,4 +100,6 @@ public class ConTable
 
         [JsonProperty("con_convention_rpg_tags")]
         public IList<ConConventionRpgTag> Tags { get; set; }
+
+        public bool IsPlacesLeft => int.Parse(MaximumPlayers) - int.Parse(PlayersJoined) > 0;
     }
