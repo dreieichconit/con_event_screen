@@ -22,8 +22,9 @@ public class ProgramItem
 
 	[JsonProperty("event_start_ts")]
 	public string StartDate { get; set; }
-	
-	public DateTime StartStamp => DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)).DateTime;
+
+	public DateTime StartStamp =>
+		DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)).DateTime + TimeSpan.FromHours(1);
 
 	[JsonProperty("event_end_ts")]
 	public string EndDate { get; set; }

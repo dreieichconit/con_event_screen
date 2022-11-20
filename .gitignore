@@ -13,3 +13,8 @@ con-event-screen/con-event-screen/bin/*
 con-event-screen/con-event-screen/obj/*
 con-event-screen/con-event-db/obj/*
 con-event-screen/con-event-db/bin/*
+con-event-screen/con-event-screen/ApiDb.db-shm
+
+con-event-screen/con-event-screen/ApiDb.db-wal
+
+.DS_Store

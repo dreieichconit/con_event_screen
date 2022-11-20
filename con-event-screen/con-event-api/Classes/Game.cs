@@ -72,7 +72,21 @@ public class ConTable
         [JsonProperty("con_convention_rpg_start_ts")]
         public string StartDate { get; set; }
 
-        public DateTime StartStamp => DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)).DateTime;
+        public DateTime StartStamp
+        {
+            get
+            {
+                try
+                {
+                    return DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)).DateTime;
+                }
+                catch
+                {
+                    return DateTime.Now;
+                }
+            } 
+        }
+        
 
         [JsonProperty("con_user_full")]
         public string FullName { get; set; }
