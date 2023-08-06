@@ -9,7 +9,7 @@ using Serilog;
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Trace()
     .WriteTo.Console()
-    .MinimumLevel.Debug()
+    .MinimumLevel.Verbose()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);

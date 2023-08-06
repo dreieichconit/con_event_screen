@@ -33,9 +33,9 @@ public class ContentController : IContentController
 				var allGames = await ConservicesRepository.GetGamesAsync();
 				Games = allGames.Where(x => x.StartStamp > DateTime.UtcNow).OrderBy(x => x.StartStamp).Take(24);
 			}
-			catch
+			catch (Exception ex)
 			{
-				Log.Error("Could not Fetch Games List"); 
+				Log.Error("Could not Fetch Games List. {Ex}", ex); 
 			}
 		}
 	}
@@ -50,9 +50,9 @@ public class ContentController : IContentController
 				var allItems = await HomepageRepository.GetProgramAsync();
 				ProgramItems = allItems.Where(x => x.IsActiveOrNext).OrderBy(x => x.StartStamp).Take(5);
 			}
-			catch
+			catch (Exception ex)
 			{
-				Log.Error("Could not Fetch Program List");
+				Log.Error("Could not Fetch Program List {Ex}", ex);
 			}
 		}
 	}
