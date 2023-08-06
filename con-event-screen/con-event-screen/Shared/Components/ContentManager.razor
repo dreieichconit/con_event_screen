@@ -5,7 +5,7 @@
 <div class="contentManager">
     <ImageViewer Src="@LogoSrc" Visible="@IsPlanVisible"></ImageViewer>
     <GamesViewer Visible="@IsGamesVisible" Order="1"></GamesViewer>
-    <ImageViewer Src="@PlanSrc" Visible="@IsVendorsVisible"></ImageViewer>
+    
     <ProgramViewer Visible="@IsProgramVisible" Order="3"></ProgramViewer>
 </div>
 
@@ -18,9 +18,9 @@
 
     private bool IsGamesVisible => VisibleState == 1;
 
-    private bool IsVendorsVisible => VisibleState == 2;
+//    private bool IsVendorsVisible => VisibleState == 2;
 
-    private bool IsProgramVisible => VisibleState == 3;
+    private bool IsProgramVisible => VisibleState == 2;
 
     protected override async Task OnInitializedAsync()
     {
@@ -30,7 +30,7 @@
 
     private void TriggerSwitch(object? e, EventArgs ee)
     {
-        if (VisibleState < 3)
+        if (VisibleState < 2)
         {
             Controller.TriggerContentChanged(VisibleState + 1);
         }
@@ -45,5 +45,5 @@
     
     private string PlanSrc { get; set; } = @".\img\plan.png";
     
-    private string LogoSrc { get; set; } = @".\img\logo-main.png";
+    private string LogoSrc { get; set; } = @".\img\ratcon.jpg";
 }

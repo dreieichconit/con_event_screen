@@ -13,7 +13,7 @@ public class HomepageRepository
 		
 		var response =
 			await _client.GetAsync(
-				new Uri("https://dreieichcon.de/api/event.php")
+				new Uri("https://editor.eventscreen.conservices.de/api/schedule")
 			);
 		
 		program = JsonConvert.DeserializeObject<List<ProgramItem>>(await response.Content.ReadAsStringAsync());

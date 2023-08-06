@@ -18,7 +18,7 @@ public static class ConservicesRepository
 
         var response =
             await _client.GetAsync(
-                new Uri("https://api.conservices.de/external_gamelist.php?api_key=201730d4278e576b25515bd90c6072d3&con_id=14")
+                new Uri("https://api.conservices.de/external_gamelist.php?api_key=Kupd7y1lNUoss8utRWdVP1SIna16zpgXJylway9tGCBNC0lG&con_id=22")
                 );
 
         var content = await response.Content.ReadAsStringAsync();
