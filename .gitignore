@@ -18,3 +18,10 @@ con-event-screen/con-event-screen/ApiDb.db-shm
 con-event-screen/con-event-screen/ApiDb.db-wal
 
 .DS_Store
+
+.nuke/temp/
+
+**/bin/*
+**/obj/*
+
+**/release/*
