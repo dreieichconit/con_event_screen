@@ -23,11 +23,43 @@ public class ProgramItem
 	[JsonProperty("event_start_ts")]
 	public string StartDate { get; set; }
 
-	public DateTime StartStamp =>
-		DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)).DateTime + TimeSpan.FromHours(1);
+	public DateTime StartStamp {
+		get
+		{
+			try
+			{
+				return TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)), TimeZoneInfo.Local).DateTime;
+			}
+			catch
+			{
+				return DateTime.Now;
+			}
+		} 
+	}
 
 	[JsonProperty("event_end_ts")]
 	public string EndDate { get; set; }
+
+	public DateTime EndStamp
+	{
+		get
+		{
+			try
+			{
+				return TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeSeconds(int.Parse(EndDate)), TimeZoneInfo.Local).DateTime;
+			}
+			catch
+			{
+				return DateTime.Now;
+			}
+		} 
+	}
+
+	public bool IsActive => StartStamp < DateTime.Now && EndStamp > DateTime.Now;
+
+	public bool IsNext => DateTime.Now < StartStamp;
+
+	public bool IsActiveOrNext => IsActive || IsNext;
 
 	[JsonProperty("event_description_short_de")]
 	public string ShortDescriptionDe { get; set; }

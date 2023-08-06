@@ -26,4 +26,9 @@
     justify-content: space-between;
     color: var(--text);
     overflow: hidden;
+    font-family: Arial !important;
+}
+
+.space-between{
+    justify-content: space-between;
 }

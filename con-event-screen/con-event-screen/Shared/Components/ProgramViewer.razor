@@ -9,56 +9,40 @@
 
 @if (Visible)
 {
-    <div class="program-wrapper" style="@Divstyle">
-        <h3 class="title-large page-title">Programm</h3>
-        
-        @if (Content.CurrentItem != null)
-        {
-            <h3 class="title-large overview-title">Es Läuft:</h3>
-            <div class="program-item-wrapper">
-                <div class="program-item">
-                    <div class="program-item-title">@HttpUtility.HtmlDecode(Content.CurrentItem.TitleDe)</div>
-                    <div class="program-item-description">@HttpUtility.HtmlDecode(Content.CurrentItem.ShortDescriptionDe)</div>
-                </div>
-                <div class="program-item">
-                    <div class="program-item-title">
-                        @Content.CurrentItem.FormattedTimeStamp
-                    </div>
-                    <div class="program-item-description">
-                        @Content.CurrentItem.location_group_de
-                    </div>
-                </div>
-            </div>
-        }
-
-        <h3 class="title-large overview-title">Anstehend:</h3>
-
-        @foreach (var item in Content.ProgramItems)
-        {
-            <div class="program-item-wrapper">
-                <div class="program-item">
-                    <div class="program-item-title">@HttpUtility.HtmlDecode(item.TitleDe)</div>
-                    <div class="program-item-description">@HttpUtility.HtmlDecode(item.ShortDescriptionDe)</div>
-                </div>
-                <div class="program-item">
-                    <div class="program-item-title">
-                        @item.FormattedTimeStamp
-                    </div>
-                    <div class="program-item-description">
-                        @item.location_group_de
-                    </div>
-                </div>
-            </div>
-        }
-        
+    <div class="program-wrapper gap-4">
+        <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" Style="width: 100%;" Class="ma-2">
+            @foreach (var item in Content.ProgramItems)
+            {
+                <MudTimelineItem Color="Current(item)" Size="CurrentSize(item)">
+                    <ItemContent>
+                        <MudText Align="Align.Center" Typo="Typo.h3">@item.TitleDe</MudText>
+                    </ItemContent>
+                    <ItemOpposite>
+                        <div class="d-flex flex-column">
+                            <MudText Align="Align.Center" Typo="Typo.h3" Color="Current(item)">@item.FormattedTimeStamp</MudText>
+                            <MudText Align="Align.Center" Typo="Typo.h3" Color="Current(item)">@item.location_group_de</MudText>
+                        </div>
+                    </ItemOpposite>
+                </MudTimelineItem>
+            }
+        </MudTimeline>
     </div>
 }
 
 
 
 @code {
-    
 
+    protected Color Current(ProgramItem item)
+    {
+        return item.IsActive ? Color.Success : Color.Default;
+    }
+
+    protected Size CurrentSize(ProgramItem item)
+    {
+        return item.IsActive ? Size.Large : Size.Medium;
+    }
+    
     protected override async Task OnInitializedAsync()
     {
         await ReloadContent(Order - 1, EventArgs.Empty);
@@ -81,6 +65,4 @@
     
     [Parameter]
     public bool Visible { get; set; }
-
-    private string Divstyle => Visible ? "display: flex" : "display: hidden";
 }

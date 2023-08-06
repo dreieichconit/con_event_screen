@@ -1,7 +1,25 @@
-﻿@inherits LayoutComponentBase
+﻿@using MudBlazor.Utilities
+@inherits LayoutComponentBase
+
+<MudThemeProvider Theme="MyTheme"/>
+<MudDialogProvider/>
+<MudSnackbarProvider/>
 
 @Body
 
 @code {
-    
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
+
+    public MudTheme MyTheme = new MudTheme()
+    {
+        Palette = new PaletteLight()
+        {
+            Success = new MudColor("87ac76")
+        }
+    };
+
 }

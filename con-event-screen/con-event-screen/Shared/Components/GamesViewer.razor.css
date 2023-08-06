@@ -12,8 +12,7 @@
     justify-content: center;
 }
 
-.table-title{
-    font-family: Garamond;
+.gh{
     font-weight: 1000;
     font-size: 4rem;
 }
@@ -29,31 +28,11 @@
     border-bottom: 2px solid var(--primary-color);
 }
 
-.w10{
-    width: 10%;
+.green-text{
+    color: green;
+    font-weight: bolder !important;
 }
 
-.w12{
-    width: 12%;
-}
-
-.w14{
-    width: 14%;
-}
-
-.w22{
-    width: 22%;
-}
-
-.w30{
-    width: 30%;
-}
-
-.w40{
-    width: 40%;
-}
-
-.centered{
-    display: flex;
-    justify-content: center;
+.table-text{
+    font-size: 3rem;
 }

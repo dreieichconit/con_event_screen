@@ -3,6 +3,7 @@ using con_event_screen.Data;
 using con_event_services.Classes;
 using con_event_services.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using MudBlazor.Services;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -16,6 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddMudServices();
 
 builder.Services.AddDbContext<ScreenDbContext>(options => options.UseSqlite("Data Source=ApiDb.db"));
 builder.Services.AddSingleton<IStateController, StateController>();

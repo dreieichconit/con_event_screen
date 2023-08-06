@@ -2,7 +2,10 @@
 @inherits LayoutComponentBase
 @inject IStateController Controller
 
-<div class="clock">@Time</div>
+<div class="clock">
+    <MudText Typo="Typo.h1">@Time</MudText>
+</div>
+
 
 @code {
     private string Time { get; set; } = "Initializing...";

@@ -21,6 +21,9 @@ public class ConTable
 
         [JsonProperty("con_table_enabled")]
         public string TableEnabled { get; set; }
+
+        [JsonIgnore]
+        public string FormatedTableName => TableName.Replace("Tisch", "<br/>Tisch");
     }
 
     public class ConConventionRpgTag
@@ -35,6 +38,8 @@ public class ConTable
 
     public class Game
     {
+        
+        public string Free => $"{PlayersJoined}/{MaximumPlayers}";
 
         [JsonProperty("con_convention_rpg_id")]
         public string Id { get; set; }
@@ -42,6 +47,9 @@ public class ConTable
         [JsonProperty("con_convention_rpg_title")]
         public string Title { get; set; }
 
+        [JsonIgnore]
+        public string FormattedTitle => Title.Length > 32 ? Title[..32] + "..." : Title;
+        
         [JsonProperty("con_convention_rpg_system")]
         public string System { get; set; }
 
@@ -78,7 +86,7 @@ public class ConTable
             {
                 try
                 {
-                    return DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)).DateTime;
+                    return TimeZoneInfo.ConvertTime(DateTimeOffset.FromUnixTimeSeconds(int.Parse(StartDate)), TimeZoneInfo.Local).DateTime;
                 }
                 catch
                 {
@@ -116,4 +124,19 @@ public class ConTable
         public IList<ConConventionRpgTag> Tags { get; set; }
 
         public bool IsPlacesLeft => int.Parse(MaximumPlayers) - int.Parse(PlayersJoined) > 0;
+        
+        public string TimeUntil
+        {
+            get
+            {
+                var difference = StartStamp - DateTime.Now;
+
+                var returner = string.Empty;
+
+                if (difference.Hours > 0) returner += $"{(difference.Hours).ToString().PadLeft(2, '0')}h ";
+                returner += $"{(Math.Abs(difference.Minutes + 1)).ToString().PadLeft(2, '0')}min";
+
+                return returner;
+            }
+        }
     }
