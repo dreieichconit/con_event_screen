@@ -133,8 +133,10 @@ public class ConTable
 
                 var returner = string.Empty;
 
-                if (difference.Hours > 0) returner += $"{(difference.Hours).ToString().PadLeft(2, '0')}h ";
-                returner += $"{(Math.Abs(difference.Minutes + 1)).ToString().PadLeft(2, '0')}min";
+                if (difference.Hours > 0) 
+                    returner += $"{(difference.Hours).ToString().PadLeft(2, '0')}h ";
+                if (difference.Minutes + 1 < 60)
+                    returner += $"{(Math.Abs(difference.Minutes + 1)).ToString().PadLeft(2, '0')}min";
 
                 return returner;
             }
