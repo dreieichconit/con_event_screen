@@ -29,3 +29,7 @@ con-event-screen/con-event-screen/ApiDb.db-wal
 *.pb
 
 build/Credentials.cs
+
+*.db
+*.db-shm
+*.db-wal
