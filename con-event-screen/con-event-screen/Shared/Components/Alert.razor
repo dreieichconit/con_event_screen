@@ -3,86 +3,89 @@
 @inherits LayoutComponentBase;
 @inject IStateController Controller;
 
-<div class="alert-overlay" style="@OverlayStyle">
-    <div class="@TopClass">
-        <div class="alert-skew-container">
-            <div class="alert-skew traverse-left">
-                @for (int i = 0; i < 400; i++)
-                {
-                    if (i % 2 == 0)
+
+    <div class="alert-overlay" style="@OverlayStyle">
+        <div class="@TopClass">
+            <div class="alert-skew-container">
+                <div class="alert-skew traverse-left">
+                    @for (int i = 0; i < 400; i++)
                     {
-                        <div class="skew"></div>
+                        if (i % 2 == 0)
+                        {
+                            <div class="skew"></div>
+                        }
+                        else
+                        {
+                            <div class="skew-inv"></div>
+                        }
                     }
-                    else
+                </div>
+            </div>
+            <div class="alert-line"></div>
+            <div class="alert-skew-container">
+                <div class="alert-skew traverse-left">
+                    @for (int i = 0; i < 400; i++)
                     {
-                        <div class="skew-inv"></div>
+                        if (i % 2 == 0)
+                        {
+                            <div class="skew"></div>
+                        }
+                        else
+                        {
+                            <div class="skew-inv"></div>
+                        }
                     }
-                }
+                </div>
             </div>
         </div>
-        <div class="alert-line"></div>
-        <div class="alert-skew-container">
-            <div class="alert-skew traverse-left">
-                @for (int i = 0; i < 400; i++)
-                {
-                    if (i % 2 == 0)
+        <div class="@MiddleClass">
+            <div class="title-wrapper">
+                <div class="title">
+                    @Title
+                </div>
+            </div>
+            <div class="message-wrapper">
+                <div class="message">
+                    @Message
+                </div>
+            </div>
+        </div>
+        <div class="@BottomClass">
+            <div class="alert-skew-container">
+                <div class="alert-skew traverse-right">
+                    @for (int i = 0; i < 400; i++)
                     {
-                        <div class="skew"></div>
+                        if (i % 2 == 0)
+                        {
+                            <div class="skew"></div>
+                        }
+                        else
+                        {
+                            <div class="skew-inv"></div>
+                        }
                     }
-                    else
+                </div>
+            </div>
+            <div class="alert-line"></div>
+            <div class="alert-skew-container">
+                <div class="alert-skew traverse-right">
+                    @for (int i = 0; i < 400; i++)
                     {
-                        <div class="skew-inv"></div>
+                        if (i % 2 == 0)
+                        {
+                            <div class="skew"></div>
+                        }
+                        else
+                        {
+                            <div class="skew-inv"></div>
+                        }
                     }
-                }
+                </div>
             </div>
         </div>
     </div>
-    <div class="@MiddleClass">
-        <div class="title-wrapper">
-            <div class="title">
-                @Title
-            </div>
-        </div>
-        <div class="message-wrapper">
-            <div class="message">
-                @Message
-            </div>
-        </div>
-    </div>
-    <div class="@BottomClass">
-        <div class="alert-skew-container">
-            <div class="alert-skew traverse-right">
-                @for (int i = 0; i < 400; i++)
-                {
-                    if (i % 2 == 0)
-                    {
-                        <div class="skew"></div>
-                    }
-                    else
-                    {
-                        <div class="skew-inv"></div>
-                    }
-                }
-            </div>
-        </div>
-        <div class="alert-line"></div>
-       <div class="alert-skew-container">
-           <div class="alert-skew traverse-right">
-               @for (int i = 0; i < 400; i++)
-               {
-                   if (i % 2 == 0)
-                   {
-                       <div class="skew"></div>
-                   }
-                   else
-                   {
-                       <div class="skew-inv"></div>
-                   }
-               }
-           </div>
-       </div>
-    </div>
-</div>
+
+
 
 @code {
     

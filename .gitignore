@@ -25,3 +25,7 @@ con-event-screen/con-event-screen/ApiDb.db-wal
 **/obj/*
 
 **/release/*
+**/.idea/*
+*.pb
+
+build/Credentials.cs

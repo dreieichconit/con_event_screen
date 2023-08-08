@@ -18,7 +18,7 @@ public class HomepageRepository
 		
 		program = JsonConvert.DeserializeObject<List<ProgramItem>>(await response.Content.ReadAsStringAsync());
 
-		return program;
+		return program.OrderBy(x =>  x.StartStamp);
 	}
 
 }

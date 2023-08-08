@@ -1,6 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
+using DefaultNamespace;
 using Nuke.Common;
 using Nuke.Common.CI;
 using Nuke.Common.Execution;
@@ -35,7 +36,7 @@ class Build : NukeBuild
 
 	AbsolutePath OutputDirectory => RootDirectory / "release";
 
-	public static int Main() => Execute<Build>(x => x.Publish);
+	public static int Main() => Execute<Build>(x => x.Upload);
 
 	Target Clean => _ => _
 						.Before(Restore)
@@ -96,4 +97,12 @@ class Build : NukeBuild
 									);
 								}
 							);
+	
+	Target Upload => _ => _
+						.DependsOn(Publish)
+						.Executes(() =>
+						{
+							UploadHelper.UploadBuild(OutputDirectory);
+							UploadHelper.RestartApp();
+						});
 }

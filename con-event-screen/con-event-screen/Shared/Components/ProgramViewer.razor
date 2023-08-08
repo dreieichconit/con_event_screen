@@ -10,7 +10,7 @@
 @if (Visible)
 {
     <div class="program-wrapper gap-4">
-        <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" Style="width: 100%;" Class="ma-2">
+        <MudTimeline TimelineOrientation="TimelineOrientation.Horizontal" Style="width: 100%; height: 100%" Class="ma-2">
             @foreach (var item in Content.ProgramItems)
             {
                 <MudTimelineItem Color="Current(item)" Size="CurrentSize(item)">
@@ -19,8 +19,8 @@
                     </ItemContent>
                     <ItemOpposite>
                         <div class="d-flex flex-column">
-                            <MudText Align="Align.Center" Typo="Typo.h3" Color="Current(item)">@item.FormattedTimeStamp</MudText>
-                            <MudText Align="Align.Center" Typo="Typo.h3" Color="Current(item)">@item.location_group_de</MudText>
+                            <MudText Align="Align.Center" Typo="Typo.h2" Color="Current(item)">@item.FormattedTimeStamp</MudText>
+                            <MudText Align="Align.Center" Typo="Typo.h4" Color="Current(item)">@item.location_group_de</MudText>
                         </div>
                     </ItemOpposite>
                 </MudTimelineItem>

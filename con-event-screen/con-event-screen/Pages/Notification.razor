@@ -1,23 +1,39 @@
 ﻿@page "/Notification"
 @using con_event_services.Interfaces
 @inject IStateController Controller
+@using con_event_screen.Shared.Components
 
-<h3>Trigger Red Alert</h3>
+@if (Authenticated)
+{
+    <h3>Trigger Red Alert</h3>
 
-<div class="wrapper">
-    <div class="title">Title</div>
-    <input type="text" @bind-value="Title"/>
+    <div class="wrapper">
+        <div class="title">Title</div>
+        <input type="text" @bind-value="Title"/>
 
-    <div class="title">Message</div>
-    <textarea @bind="Message"></textarea>
-    
-    <div class="splitter"></div>
+        <div class="title">Message</div>
+        <textarea @bind="Message"></textarea>
+        
+        <div class="splitter"></div>
 
-    <button class="btn btn-danger" @onclick="Fire">FIRE ALERT</button>
-</div>
+        <button class="btn btn-danger" @onclick="Fire">FIRE ALERT</button>
+    </div>
+}
+else
+{
+    <SimplePassword LoginInvoked="UpdateAuthentication"/>
+}
 
 
 @code {
+
+    private bool Authenticated { get; set; }
+
+    private void UpdateAuthentication(bool input)
+    {
+        Authenticated = input;
+        InvokeAsync(StateHasChanged);
+    }
     private string Title { get; set; } = "";
 
     private string Message { get; set; } = "";
