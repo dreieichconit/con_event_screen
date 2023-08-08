@@ -12,6 +12,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "con-event-api.tests", "con-
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "..\build\_build.csproj", "{0E7BE8CB-6E24-414C-B608-3AB87E2D11FA}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventScreen.WebUi", "EventScreen.WebUi\EventScreen.WebUi.csproj", "{1758F31A-188A-444D-B821-FFFCB7137DCE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{B50C4E17-613E-45D0-9530-31D1A4935081}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventScreen.Db", "EventScreen.Db\EventScreen.Db.csproj", "{0633365E-097B-4A38-8ADE-B654164C034E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,5 +46,16 @@ Global
 		{042B24EA-4A3F-4D51-AB02-E153E43214C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{042B24EA-4A3F-4D51-AB02-E153E43214C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{042B24EA-4A3F-4D51-AB02-E153E43214C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1758F31A-188A-444D-B821-FFFCB7137DCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1758F31A-188A-444D-B821-FFFCB7137DCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1758F31A-188A-444D-B821-FFFCB7137DCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1758F31A-188A-444D-B821-FFFCB7137DCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0633365E-097B-4A38-8ADE-B654164C034E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0633365E-097B-4A38-8ADE-B654164C034E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0633365E-097B-4A38-8ADE-B654164C034E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0633365E-097B-4A38-8ADE-B654164C034E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{0633365E-097B-4A38-8ADE-B654164C034E} = {B50C4E17-613E-45D0-9530-31D1A4935081}
 	EndGlobalSection
 EndGlobal

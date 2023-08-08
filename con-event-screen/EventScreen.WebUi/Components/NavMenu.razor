@@ -1,0 +1,47 @@
+﻿@using EventScreen.Db.Models
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@using EventScreen.Db.Users
+@inject AuthenticationStateProvider AuthenticationStateProvider
+@inject UserManager<ApplicationUser> UserManager
+@inject RoleManager<IdentityRole> RoleManager
+
+<MudNavMenu>
+    <MudText Typo="Typo.body2" Class="px-4">by Demolite</MudText>
+    <MudDivider/>
+    @if (IsInRoleAndLoggedIn(Roles.GlobalAdministrator))
+    {  
+        <MudNavLink Href="/Settings/Users">Users</MudNavLink>
+        <MudNavLink  Href="/Settings/Theme">Theme</MudNavLink>
+        <MudNavLink Href="/Settings/Api">Api Connection</MudNavLink>
+        <MudNavLink Href="/Marquee">Marquee</MudNavLink>
+        <MudNavLink Href="/Alert">Alert</MudNavLink>
+    }
+    
+    @if (IsInRoleAndLoggedIn(Roles.Administrator))
+    {
+        <MudNavLink  Href="/Settings/Theme">Theme</MudNavLink>
+        <MudNavLink Href="/Settings/Api">Api Connection</MudNavLink>
+        <MudNavLink Href="/Marquee">Marquee</MudNavLink>
+        <MudNavLink Href="/Alert">Alert</MudNavLink>
+    }
+    <MudNavLink Href="/Screen">Event Screen</MudNavLink>
+</MudNavMenu>
+
+@code {
+    
+    protected override async Task OnInitializedAsync()
+    {
+        var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        CurrentUser = state.User;
+    }
+
+    private ClaimsPrincipal? CurrentUser { get; set; }
+    
+    private bool IsInRoleAndLoggedIn(string role)
+    {
+        return CurrentUser != null && CurrentUser.IsInRole(role);
+    }
+    
+
+}
