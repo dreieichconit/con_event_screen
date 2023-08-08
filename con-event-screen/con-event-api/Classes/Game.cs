@@ -48,7 +48,7 @@ public class ConTable
         public string Title { get; set; }
 
         [JsonIgnore]
-        public string FormattedTitle => Title.Length > 32 ? Title[..32] + "..." : Title;
+        public string FormattedTitle => Title.Length > 40 ? Title[..40] + "..." : Title;
         
         [JsonProperty("con_convention_rpg_system")]
         public string System { get; set; }
