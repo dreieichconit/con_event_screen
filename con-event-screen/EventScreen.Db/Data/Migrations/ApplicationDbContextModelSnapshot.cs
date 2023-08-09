@@ -17,6 +17,122 @@ namespace EventScreen.WebUi.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
 
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ApiSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("GamesEndpoint")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ProgramEndpoint")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ApiSettings");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.MarqueeSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Marquee")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("Scroll")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("MarqueeSettings");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.Screen", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ScreenSettingsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ScreenSettingsId");
+
+                    b.ToTable("Screens");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ScreenSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ScreenSettings");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.Theme", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Background")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Primary")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Secondary")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Themes");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ThemeSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CurrentThemeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CurrentThemeId");
+
+                    b.ToTable("ThemeSettings");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -236,6 +352,24 @@ namespace EventScreen.WebUi.Data.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.Screen", b =>
+                {
+                    b.HasOne("EventScreen.Db.Models.Settings.ScreenSettings", null)
+                        .WithMany("Screens")
+                        .HasForeignKey("ScreenSettingsId");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ThemeSettings", b =>
+                {
+                    b.HasOne("EventScreen.Db.Models.Settings.Theme", "CurrentTheme")
+                        .WithMany()
+                        .HasForeignKey("CurrentThemeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CurrentTheme");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -285,6 +419,11 @@ namespace EventScreen.WebUi.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ScreenSettings", b =>
+                {
+                    b.Navigation("Screens");
                 });
 #pragma warning restore 612, 618
         }

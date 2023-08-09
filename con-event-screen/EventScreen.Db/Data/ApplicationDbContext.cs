@@ -1,4 +1,5 @@
 ﻿using EventScreen.Db.Models;
+using EventScreen.Db.Models.Settings;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,6 +17,27 @@ public class ApplicationDbContext : IdentityDbContext
 					.UseSqlite("DataSource=app.db").Options;
 		return new ApplicationDbContext(options);
 	}
-	
-	public DbSet<ApplicationUser> Users { get; set; }
+
+	public new DbSet<ApplicationUser> Users { get; set; } = null!;
+
+	public DbSet<ApiSettings> ApiSettings { get; set; } = null!;
+
+	public DbSet<Theme> Themes { get; set; } = null!;
+
+	public DbSet<ThemeSettings> ThemeSettings { get; set; } = null!;
+
+	public DbSet<MarqueeSettings> MarqueeSettings { get; set; } = null!;
+
+	public DbSet<Screen> Screens { get; set; } = null!;
+
+	public DbSet<ScreenSettings> ScreenSettings { get; set; } = null!;
+
+	protected override void OnModelCreating(ModelBuilder builder)
+	{
+		builder.Entity<ThemeSettings>().Navigation(x => x.CurrentTheme).AutoInclude();
+
+		builder.Entity<ScreenSettings>().Navigation(x => x.Screens).AutoInclude();
+		
+		base.OnModelCreating(builder);
+	}
 }
