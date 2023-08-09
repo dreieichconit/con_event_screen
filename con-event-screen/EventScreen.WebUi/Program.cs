@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using EventScreen.WebUi.Areas.Identity;
+using EventScreen.WebUi.DI;
 using MudBlazor.Services;
 using Serilog;
-using Serilog.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +20,9 @@ Log.Logger = new LoggerConfiguration()
 	
 
 // Add services to the container.
+
+DependencyManager.InjectServices(builder.Services);
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ??
 						throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
 

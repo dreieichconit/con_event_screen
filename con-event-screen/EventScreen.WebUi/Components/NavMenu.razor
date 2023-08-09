@@ -12,11 +12,6 @@
     @if (IsInRoleAndLoggedIn(Roles.GlobalAdministrator))
     {  
         <MudNavLink Href="/Settings/Users">Users</MudNavLink>
-        <MudNavLink Href="/Settings">Settings</MudNavLink>
-        <MudNavLink Href="/Settings/Theme">Theme</MudNavLink>
-        <MudNavLink Href="/Settings/Api">Api Connection</MudNavLink>
-        <MudNavLink Href="/Marquee">Marquee</MudNavLink>
-        <MudNavLink Href="/Alert">Alert</MudNavLink>
     }
     
     @if (IsInRoleAndLoggedIn(Roles.Administrator))

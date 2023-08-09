@@ -18,6 +18,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DB", "DB", "{B50C4E17-613E-
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventScreen.Db", "EventScreen.Db\EventScreen.Db.csproj", "{0633365E-097B-4A38-8ADE-B654164C034E}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{3B9228AF-741B-46BB-9597-C1325780CA3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventScreen.Services", "EventScreen.Services\EventScreen.Services.csproj", "{4184702C-197B-4081-96BA-839D3A70674F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -54,8 +58,13 @@ Global
 		{0633365E-097B-4A38-8ADE-B654164C034E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0633365E-097B-4A38-8ADE-B654164C034E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0633365E-097B-4A38-8ADE-B654164C034E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4184702C-197B-4081-96BA-839D3A70674F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4184702C-197B-4081-96BA-839D3A70674F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4184702C-197B-4081-96BA-839D3A70674F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4184702C-197B-4081-96BA-839D3A70674F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{0633365E-097B-4A38-8ADE-B654164C034E} = {B50C4E17-613E-45D0-9530-31D1A4935081}
+		{4184702C-197B-4081-96BA-839D3A70674F} = {3B9228AF-741B-46BB-9597-C1325780CA3D}
 	EndGlobalSection
 EndGlobal

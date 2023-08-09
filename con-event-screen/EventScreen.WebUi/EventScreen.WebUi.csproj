@@ -30,7 +30,9 @@
 
     <ItemGroup>
       <ProjectReference Include="..\EventScreen.Db\EventScreen.Db.csproj" />
+      <ProjectReference Include="..\EventScreen.Services\EventScreen.Services.csproj" />
     </ItemGroup>
+
 
 
 </Project>
