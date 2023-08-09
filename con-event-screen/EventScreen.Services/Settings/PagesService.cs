@@ -13,7 +13,6 @@ public class PagesService : IPagesService
 	public IEnumerable<Screen> AvailablePages { get; set; } = new List<Screen>();
 
 	private ScreenSettings _screenSettings = null!;
-	
 
 	public PagesService(IScreenRepository screenRepository, IScreenSettingsRepository screenSettingsRepository)
 	{
@@ -38,5 +37,6 @@ public class PagesService : IPagesService
 	public void Save()
 	{
 		_screenSettingsRepository.Update(_screenSettings);
+		Load();
 	}
 }
