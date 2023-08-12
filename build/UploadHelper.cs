@@ -15,7 +15,8 @@ public class UploadHelper
 			HostName = Credentials.Host,
 			UserName = Credentials.Username,
 			Password = Credentials.Password,
-			SshHostKeyFingerprint = Credentials.SshHostKeyFingerprint
+			SshHostKeyPolicy = SshHostKeyPolicy.AcceptNew
+			// SshHostKeyFingerprint = Credentials.SshHostKeyFingerprint
 		};
 
 		using var session = new Session();

@@ -31,7 +31,7 @@ public class ContentController : IContentController
 			{
 				Log.Debug("Triggering Reload of Games List");
 				var allGames = await ConservicesRepository.GetGamesAsync();
-				Games = allGames.Where(x => x.StartStamp > DateTime.UtcNow).OrderBy(x => x.StartStamp).Take(24);
+				Games = allGames.Where(x => x.StartStamp > DateTime.Now).OrderBy(x => x.StartStamp).Take(24);
 			}
 			catch (Exception ex)
 			{

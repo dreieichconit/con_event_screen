@@ -5,6 +5,9 @@
 <div class="contentManager">
     <ImageViewer Src="@LogoSrc" Visible="@IsPlanVisible"></ImageViewer>
     <GamesViewer Visible="@IsGamesVisible" Order="1" Page="@Page"></GamesViewer>
+    <ImageViewer Src="@PlanSrc1" Visible="@IsPlan1Visible"></ImageViewer>
+    <ImageViewer Src="@PlanSrc2" Visible="@IsPlan2Visible"></ImageViewer>
+    <ImageViewer Src="@PlanSrc3" Visible="@IsPlan3Visible"></ImageViewer>
     <ProgramViewer Visible="@IsProgramVisible" Order="2"></ProgramViewer>
 </div>
 
@@ -13,13 +16,19 @@
 
     private int VisibleState = 0;
 
-    private int Page => VisibleState - 1;
+    private int Page => VisibleState;
 
-    private bool IsPlanVisible => VisibleState is 0; 
+    private bool IsPlanVisible => false; 
 
-    private bool IsGamesVisible => VisibleState is 1 or 2 or 3;
+    private bool IsGamesVisible => VisibleState is 0 or 1 or 2;
 
-    private bool IsProgramVisible => VisibleState is 4;
+    private bool IsPlan1Visible => false;
+    
+    private bool IsPlan2Visible => false;
+    
+    private bool IsPlan3Visible => false;
+
+    private bool IsProgramVisible => false;
 
     protected override async Task OnInitializedAsync()
     {
@@ -29,7 +38,7 @@
 
     private void TriggerSwitch(object? e, EventArgs ee)
     {
-        if (VisibleState < 4)
+        if (VisibleState < 2)
         {
             Controller.TriggerContentChanged(VisibleState + 1);
         }
@@ -42,7 +51,11 @@
         InvokeAsync(StateHasChanged);
     }
     
-    private string PlanSrc { get; set; } = @".\img\plan.png";
-    
     private string LogoSrc { get; set; } = @".\img\ratcon.jpg";
+    
+    private string PlanSrc1 { get; set; } = @".\img\Lageplan-eg.jpg";
+    
+    private string PlanSrc2 { get; set; } = @".\img\Lageplan-1og.jpg";
+    
+    private string PlanSrc3 { get; set; } = @".\img\Lageplan-2.jpg";
 }

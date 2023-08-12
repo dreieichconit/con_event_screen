@@ -45,7 +45,7 @@ public class StateController : IStateController
         {
             SecondElapsed?.Invoke(null, EventArgs.Empty);
 
-            if (DateTime.Now.Second == 30)
+            if (DateTime.Now.Second is 15 or 30 or 45)
             {
                 HalfMinuteElapsed?.Invoke(null, EventArgs.Empty);
             }

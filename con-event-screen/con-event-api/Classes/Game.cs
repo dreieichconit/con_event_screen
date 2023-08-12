@@ -130,9 +130,10 @@ public class ConTable
             get
             {
                 var difference = StartStamp - DateTime.Now;
+                if (difference.TotalSeconds < 0) return "Läuft";
 
                 var returner = string.Empty;
-
+                
                 if (difference.Hours > 0) 
                     returner += $"{(difference.Hours).ToString().PadLeft(2, '0')}h ";
                 if (difference.Minutes + 1 < 60)
