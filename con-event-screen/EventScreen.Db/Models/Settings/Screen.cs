@@ -11,4 +11,6 @@ public class Screen
 	public ScreenType Type { get; set; }
     
 	public string? ImageUrl { get; set; }
+
+	public int DisplayTimeSeconds { get; set; }
 }

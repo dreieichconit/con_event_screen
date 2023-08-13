@@ -4,7 +4,7 @@ public class MarqueeSettings
 {
 	public int Id { get; set; }
 
-	public string Marquee { get; set; } = string.Empty;
+	public IEnumerable<Marquee> Marquees { get; set; }
 	
 	public bool Scroll { get; set; }
 }

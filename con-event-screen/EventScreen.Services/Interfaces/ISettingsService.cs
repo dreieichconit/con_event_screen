@@ -1,4 +1,6 @@
-﻿namespace EventScreen.Services.Interfaces;
+﻿using EventScreen.Db.Models.Settings;
+
+namespace EventScreen.Services.Interfaces;
 
 public interface ISettingsService
 {
