@@ -20,6 +20,10 @@ public class ApplicationDbContext : IdentityDbContext
 
 	public new DbSet<ApplicationUser> Users { get; set; } = null!;
 
+	public DbSet<ActiveSetting> ActiveSettings { get; set; } = null!;
+
+	public DbSet<EventConfig> EventConfigs { get; set; } = null!;
+
 	public DbSet<ApiSettings> ApiSettings { get; set; } = null!;
 
 	public DbSet<Theme> Themes { get; set; } = null!;
@@ -37,6 +41,9 @@ public class ApplicationDbContext : IdentityDbContext
 		builder.Entity<ThemeSettings>().Navigation(x => x.CurrentTheme).AutoInclude();
 
 		builder.Entity<ScreenSettings>().Navigation(x => x.Screens).AutoInclude();
+
+		builder.Entity<ActiveSetting>().Navigation(x => x.ActiveConfig).AutoInclude();
+		builder.Entity<EventConfig>().Navigation(x => x.EventScreens).AutoInclude();
 		
 		base.OnModelCreating(builder);
 	}

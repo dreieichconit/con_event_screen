@@ -17,6 +17,33 @@ namespace EventScreen.WebUi.Data.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.5");
 
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ActiveSetting", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("ActiveConfigId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ActiveConfigId");
+
+                    b.ToTable("ActiveSettings");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.AlertSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AlertSettings");
+                });
+
             modelBuilder.Entity("EventScreen.Db.Models.Settings.ApiSettings", b =>
                 {
                     b.Property<int>("Id")
@@ -36,15 +63,74 @@ namespace EventScreen.WebUi.Data.Migrations
                     b.ToTable("ApiSettings");
                 });
 
-            modelBuilder.Entity("EventScreen.Db.Models.Settings.MarqueeSettings", b =>
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.EventConfig", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Marquee")
+                    b.Property<int>("EventAlertSettingsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EventApiSettingsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EventMarqueeId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("EventName")
                         .IsRequired()
                         .HasColumnType("TEXT");
+
+                    b.Property<int>("EventScreensId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("EventThemeId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EventAlertSettingsId");
+
+                    b.HasIndex("EventApiSettingsId");
+
+                    b.HasIndex("EventMarqueeId");
+
+                    b.HasIndex("EventScreensId");
+
+                    b.HasIndex("EventThemeId");
+
+                    b.ToTable("EventConfigs");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.Marquee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("MarqueeSettingsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Order")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("MarqueeSettingsId");
+
+                    b.ToTable("Marquee");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.MarqueeSettings", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
 
                     b.Property<bool>("Scroll")
                         .HasColumnType("INTEGER");
@@ -54,10 +140,40 @@ namespace EventScreen.WebUi.Data.Migrations
                     b.ToTable("MarqueeSettings");
                 });
 
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ScheduledAlert", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("AlertMessage")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("AlertSettingsId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("AlertTime")
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("AlertTitle")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AlertSettingsId");
+
+                    b.ToTable("ScheduledAlert");
+                });
+
             modelBuilder.Entity("EventScreen.Db.Models.Settings.Screen", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("DisplayTimeSeconds")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("ImageUrl")
@@ -109,6 +225,10 @@ namespace EventScreen.WebUi.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("ThemeName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -352,6 +472,72 @@ namespace EventScreen.WebUi.Data.Migrations
                     b.HasDiscriminator().HasValue("ApplicationUser");
                 });
 
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ActiveSetting", b =>
+                {
+                    b.HasOne("EventScreen.Db.Models.Settings.EventConfig", "ActiveConfig")
+                        .WithMany()
+                        .HasForeignKey("ActiveConfigId");
+
+                    b.Navigation("ActiveConfig");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.EventConfig", b =>
+                {
+                    b.HasOne("EventScreen.Db.Models.Settings.AlertSettings", "EventAlertSettings")
+                        .WithMany()
+                        .HasForeignKey("EventAlertSettingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventScreen.Db.Models.Settings.ApiSettings", "EventApiSettings")
+                        .WithMany()
+                        .HasForeignKey("EventApiSettingsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventScreen.Db.Models.Settings.MarqueeSettings", "EventMarquee")
+                        .WithMany()
+                        .HasForeignKey("EventMarqueeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventScreen.Db.Models.Settings.ScreenSettings", "EventScreens")
+                        .WithMany()
+                        .HasForeignKey("EventScreensId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("EventScreen.Db.Models.Settings.ThemeSettings", "EventTheme")
+                        .WithMany()
+                        .HasForeignKey("EventThemeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("EventAlertSettings");
+
+                    b.Navigation("EventApiSettings");
+
+                    b.Navigation("EventMarquee");
+
+                    b.Navigation("EventScreens");
+
+                    b.Navigation("EventTheme");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.Marquee", b =>
+                {
+                    b.HasOne("EventScreen.Db.Models.Settings.MarqueeSettings", null)
+                        .WithMany("Marquees")
+                        .HasForeignKey("MarqueeSettingsId");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.ScheduledAlert", b =>
+                {
+                    b.HasOne("EventScreen.Db.Models.Settings.AlertSettings", null)
+                        .WithMany("ScheduledAlerts")
+                        .HasForeignKey("AlertSettingsId");
+                });
+
             modelBuilder.Entity("EventScreen.Db.Models.Settings.Screen", b =>
                 {
                     b.HasOne("EventScreen.Db.Models.Settings.ScreenSettings", null)
@@ -419,6 +605,16 @@ namespace EventScreen.WebUi.Data.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.AlertSettings", b =>
+                {
+                    b.Navigation("ScheduledAlerts");
+                });
+
+            modelBuilder.Entity("EventScreen.Db.Models.Settings.MarqueeSettings", b =>
+                {
+                    b.Navigation("Marquees");
                 });
 
             modelBuilder.Entity("EventScreen.Db.Models.Settings.ScreenSettings", b =>

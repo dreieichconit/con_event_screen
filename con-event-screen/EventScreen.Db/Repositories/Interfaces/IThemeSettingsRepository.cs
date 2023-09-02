@@ -1,6 +1,8 @@
-﻿namespace EventScreen.Db.Repositories.Interfaces;
+﻿using EventScreen.Db.Models.Settings;
 
-public interface IThemeSettingsRepository
+namespace EventScreen.Db.Repositories.Interfaces;
+
+public interface IThemesRepository : IBaseRepository<Theme>
 {
 	
 }

@@ -1,9 +1,10 @@
 ﻿using EventScreen.Db.Data;
+using Microsoft.EntityFrameworkCore;
 using Serilog;
 
 namespace EventScreen.Db.Repositories;
 
-public class BaseRepository<T> where T : class, new()
+public abstract class BaseRepository<T> where T : class, new()
 {
 	protected bool TrySave(ApplicationDbContext db)
 	{

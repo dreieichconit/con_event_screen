@@ -9,28 +9,35 @@ public class EventConfigService : IEventConfigService
 	private readonly IEventConfigRepository _eventConfigRepository;
 	private readonly IActiveSettingsRepository _activeSettingsRepository;
 
-	public EventConfigService(IEventConfigRepository eventConfigRepository, IActiveSettingsRepository activeSettingsRepository)
+	public EventConfigService(IEventConfigRepository eventConfigRepository, 
+							IActiveSettingsRepository activeSettingsRepository)
 	{
 		_eventConfigRepository = eventConfigRepository;
 		_activeSettingsRepository = activeSettingsRepository;
+		
+		Load();
 	}
 	
 	public event EventHandler? SettingsChanged;
 	
-	public List<EventConfig> EventConfigs { get; set; }
+	private ActiveSetting? Active { get; set; }
+	
+	public List<EventConfig> EventConfigs { get; set; } = new();
 
-	public EventConfig? CurrentEvent { get; set; }
+	public EventConfig? CurrentEvent { get; set; } = new();
 
 	public void Load()
 	{
 		EventConfigs = _eventConfigRepository.GetAll().ToList();
 		
-		var active = _activeSettingsRepository.GetOrCreate();
+		Active = _activeSettingsRepository.GetOrCreate();
 
-		if (active!.ActiveConfig != null)
+		if (Active!.ActiveConfig != null)
 		{
-			CurrentEvent = EventConfigs.Find(x => x.Id == active.ActiveConfig.Id);
+			CurrentEvent = EventConfigs.Find(x => x.Id == Active.ActiveConfig.Id);
 		}
+		
+		SettingsChanged?.Invoke(this, EventArgs.Empty);
 	}
 
 	public void Save()
@@ -39,6 +46,10 @@ public class EventConfigService : IEventConfigService
 		{
 			_eventConfigRepository.Update(eventConfig);
 		}
+		
+		Active!.ActiveConfig = CurrentEvent;
+
+		_activeSettingsRepository.Update(Active);
 	}
 	
 }

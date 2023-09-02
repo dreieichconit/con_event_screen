@@ -1,8 +1,9 @@
 ﻿using EventScreen.Db.Models.Settings;
+using EventScreen.Db.Repositories.Interfaces;
 
 namespace EventScreen.Db.Repositories;
 
-public class ThemeSettingsRepository : BaseRepository<ThemeSettings>
+public class ThemesRepository :  BaseRepository<Theme>, IThemesRepository
 {
 	
 }

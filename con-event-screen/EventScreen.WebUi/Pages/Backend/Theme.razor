@@ -1,8 +1,80 @@
 ﻿@page "/Settings/Theme"
-<h3>Theme</h3>
+@using EventScreen.Services.Interfaces
+@using EventScreen.Db.Repositories.Interfaces
+@using DbTheme = Db.Models.Settings.Theme
+@using EventScreen.Db.Enums
+@using MudBlazor.Utilities
+
+@inject IThemesRepository ThemesRepository
+@inject IEventConfigService EventConfigService
+
+<div class="d-flex flex-column gap-2">
+    
+    <h3>Select and Edit Themes</h3>
+    
+    <MudSelect T="DbTheme"
+               @bind-Value="SelectedTheme"
+               Variant="Variant.Outlined"
+               AnchorOrigin="Origin.BottomCenter"
+               Label="Select Event Config">
+        @foreach (var theme in Themes)
+        {
+            <MudSelectItem Value="@theme">@theme.ThemeName</MudSelectItem>
+        }
+    </MudSelect>
+    
+    <MudTextField 
+        Label="Edit Theme Name" 
+        @bind-Value="SelectedTheme.ThemeName" />
+    
+    <MudColorPicker 
+        Label="Select Primary Color"
+        @bind-Text="SelectedTheme.Primary"
+        ValueChanged="c => UpdateColor(c, ThemeColor.Primary)"
+        DisableAlpha="true" 
+        DisableModeSwitch="true"
+        ColorPickerMode="ColorPickerMode.HEX" 
+        PickerVariant="PickerVariant.Inline" />
+</div>
 
 @code {
 
-    
+    private DbTheme SelectedTheme { get; set; }
+
+    private List<DbTheme> Themes { get; set; } = new();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+
+        Themes = ThemesRepository.GetAll().ToList();
+        SelectedTheme = Themes.FirstOrDefault() ?? DbTheme.Create();
+
+        InvokeAsync(StateHasChanged);
+    }
+
+    private void Save()
+    {
+        
+    }
+
+    private void AddNew()
+    {
+        
+    }
+
+    private void UpdateColor(MudColor mudColor, ThemeColor color)
+    {
+        // switch (color)
+        // {
+        //     case ThemeColor.Primary:
+        //         SelectedTheme.Primary = mudColor.Value;
+        //         break;
+        //     default:
+        //         throw new ArgumentOutOfRangeException(nameof(color), color, null);
+        // }
+
+        InvokeAsync(StateHasChanged);
+    }
 
 }

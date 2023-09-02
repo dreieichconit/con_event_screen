@@ -16,9 +16,11 @@
     
     @if (IsInRoleAndLoggedIn(Roles.Administrator))
     {
-        <MudNavLink Href="/Settings">Settings</MudNavLink>
-        <MudNavLink Href="/Settings/Theme">Theme</MudNavLink>
-        <MudNavLink Href="/Settings/Api">Api Connection</MudNavLink>
+        <MudNavGroup Title="Settings">
+            <MudNavLink Href="/Settings">Event Config</MudNavLink>
+            <MudNavLink Href="/Settings/Theme">Theme</MudNavLink>
+            <MudNavLink Href="/Settings/Api">Api Connection</MudNavLink>
+        </MudNavGroup>
         <MudNavLink Href="/Marquee">Marquee</MudNavLink>
         <MudNavLink Href="/Alert">Alert</MudNavLink>
     }

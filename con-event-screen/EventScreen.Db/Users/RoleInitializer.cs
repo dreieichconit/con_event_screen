@@ -20,7 +20,7 @@ public static class RoleInitializer
 		await EnsureRoles(roleManager);
 
 		// find the user with the admin email 
-		var user = await userManager.FindByEmailAsync("admin@email.de");
+		var user = await userManager.FindByEmailAsync("admin@example.org");
 
 		if (user == null)
 		{
