@@ -10,7 +10,7 @@ public class EventConfig
 
 	public ScreenSettings EventScreens { get; set; }
 
-	public ThemeSettings EventTheme { get; set; }
+	public Theme EventTheme { get; set; }
 	
 	public ApiSettings EventApiSettings { get; set; }
 	
@@ -23,9 +23,9 @@ public class EventConfig
 			EventName = "Please enter the event name",
 			EventMarquee = new MarqueeSettings(),
 			EventScreens = new ScreenSettings(),
-			EventTheme = new ThemeSettings()
+			EventTheme = new Theme()
 			{
-				CurrentTheme = new Theme(),
+				ThemeName = "Please set a name",
 			},
 			EventApiSettings = new ApiSettings(),
 			EventAlertSettings = new AlertSettings(),

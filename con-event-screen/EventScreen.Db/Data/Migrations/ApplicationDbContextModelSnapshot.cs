@@ -216,7 +216,15 @@ namespace EventScreen.WebUi.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("BackgroundDark")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Primary")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("PrimaryDark")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -224,7 +232,15 @@ namespace EventScreen.WebUi.Data.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("SecondaryDark")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("TextDark")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -507,7 +523,7 @@ namespace EventScreen.WebUi.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("EventScreen.Db.Models.Settings.ThemeSettings", "EventTheme")
+                    b.HasOne("EventScreen.Db.Models.Settings.Theme", "EventTheme")
                         .WithMany()
                         .HasForeignKey("EventThemeId")
                         .OnDelete(DeleteBehavior.Cascade)

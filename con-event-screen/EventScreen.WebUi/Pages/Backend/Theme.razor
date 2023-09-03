@@ -8,15 +8,14 @@
 @inject IThemesRepository ThemesRepository
 @inject IEventConfigService EventConfigService
 
-<div class="d-flex flex-column gap-2">
-    
+<div class="d-flex flex-column gap-4">
     <h3>Select and Edit Themes</h3>
     
     <MudSelect T="DbTheme"
                @bind-Value="SelectedTheme"
                Variant="Variant.Outlined"
                AnchorOrigin="Origin.BottomCenter"
-               Label="Select Event Config">
+               Label="Select Theme">
         @foreach (var theme in Themes)
         {
             <MudSelectItem Value="@theme">@theme.ThemeName</MudSelectItem>
@@ -27,14 +26,122 @@
         Label="Edit Theme Name" 
         @bind-Value="SelectedTheme.ThemeName" />
     
-    <MudColorPicker 
-        Label="Select Primary Color"
-        @bind-Text="SelectedTheme.Primary"
-        ValueChanged="c => UpdateColor(c, ThemeColor.Primary)"
-        DisableAlpha="true" 
-        DisableModeSwitch="true"
-        ColorPickerMode="ColorPickerMode.HEX" 
-        PickerVariant="PickerVariant.Inline" />
+    <MudGrid>
+        <MudItem xs="6">
+            <MudStack>
+                <MudColorPicker
+                    Label="Select Background Color (Light Theme)"
+                    @bind-Text="SelectedTheme.Background"
+                    DisableAlpha="true"
+                    DisableModeSwitch="true"
+                    ColorPickerMode="ColorPickerMode.HEX"
+                    PickerVariant="PickerVariant.Inline"/>
+                <MudColorPicker
+                    Label="Select Primary Color (Light Theme)"
+                    @bind-Text="SelectedTheme.Primary"
+                    DisableAlpha="true"
+                    DisableModeSwitch="true"
+                    ColorPickerMode="ColorPickerMode.HEX"
+                    PickerVariant="PickerVariant.Inline"/>
+                <MudColorPicker
+                    Label="Select Secondary Color (Light Theme)"
+                    @bind-Text="SelectedTheme.Secondary"
+                    DisableAlpha="true"
+                    DisableModeSwitch="true"
+                    ColorPickerMode="ColorPickerMode.HEX"
+                    PickerVariant="PickerVariant.Inline"/>
+                <MudColorPicker
+                    Label="Select Text Color (Light Theme)"
+                    @bind-Text="SelectedTheme.Text"
+                    DisableAlpha="true"
+                    DisableModeSwitch="true"
+                    ColorPickerMode="ColorPickerMode.HEX"
+                    PickerVariant="PickerVariant.Inline"/>
+            </MudStack>
+        </MudItem>
+        <MudItem xs="6">
+            <MudStack>
+                <MudColorPicker
+                    Label="Select Background Color (Dark Theme)"
+                    @bind-Text="SelectedTheme.BackgroundDark"
+                    DisableAlpha="true"
+                    DisableModeSwitch="true"
+                    ColorPickerMode="ColorPickerMode.HEX"
+                    PickerVariant="PickerVariant.Inline"/>
+                <MudColorPicker
+                    Label="Select Primary Color (Dark Theme)"
+                    @bind-Text="SelectedTheme.PrimaryDark"
+                    DisableAlpha="true"
+                    DisableModeSwitch="true"
+                    ColorPickerMode="ColorPickerMode.HEX"
+                    PickerVariant="PickerVariant.Inline"/>
+                <MudColorPicker
+                    Label="Select Secondary Color (Dark Theme)"
+                    @bind-Text="SelectedTheme.SecondaryDark"
+                    DisableAlpha="true"
+                    DisableModeSwitch="true"
+                    ColorPickerMode="ColorPickerMode.HEX"
+                    PickerVariant="PickerVariant.Inline"/>
+                <MudColorPicker
+                    Label="Select Text Color (Dark Theme)"
+                    @bind-Text="SelectedTheme.Text"
+                    DisableAlpha="true"
+                    DisableModeSwitch="true"
+                    ColorPickerMode="ColorPickerMode.HEX"
+                    PickerVariant="PickerVariant.Inline"/>
+            </MudStack>
+        </MudItem>
+    </MudGrid>
+    
+    <div class="d-flex flex-row gap-4">
+        <MudButton @onclick="AddNew" Color="Color.Primary" Variant="Variant.Filled">Add New</MudButton>
+        <MudButton @onclick="Save" Color="Color.Success" Variant="Variant.Filled">Save</MudButton>
+        <MudButton @onclick="Apply" Color="Color.Secondary" Variant="Variant.Filled">Apply Theme To Event</MudButton>
+    </div>
+    
+    <MudGrid>
+        <MudItem xs="6">
+            <MudCard Style="@Background(SelectedTheme.Background)" Class="pa-4">
+                <MudCardHeader>
+                    <MudText Typo="Typo.body1">Light Theme Preview</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack>
+                        <MudText Style="@Foreground(SelectedTheme.Primary)" Typo="Typo.h4">
+                            Primary
+                        </MudText>
+                        <MudText Style="@Foreground(SelectedTheme.Secondary)" Typo="Typo.h4">
+                            Secondary
+                        </MudText>
+                        <MudText Style="@Foreground(SelectedTheme.Text)" Typo="Typo.body1">
+                            Text
+                        </MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+        <MudItem xs="6">
+            <MudCard Style="@Background(SelectedTheme.BackgroundDark)" Class="pa-4">
+                <MudCardHeader>
+                    <MudText Typo="Typo.body1">Dark Theme Preview</MudText>
+                </MudCardHeader>
+                <MudCardContent>
+                    <MudStack>
+                        <MudText Style="@Foreground(SelectedTheme.Primary)" Typo="Typo.h4">
+                            Primary
+                        </MudText>
+                        <MudText Style="@Foreground(SelectedTheme.SecondaryDark)" Typo="Typo.h4">
+                            Secondary
+                        </MudText>
+                        <MudText Style="@Foreground(SelectedTheme.TextDark)" Typo="Typo.body1">
+                            Text
+                        </MudText>
+                    </MudStack>
+                </MudCardContent>
+            </MudCard>
+        </MudItem>
+    </MudGrid>
+    
 </div>
 
 @code {
@@ -43,38 +150,47 @@
 
     private List<DbTheme> Themes { get; set; } = new();
 
+    private string Background(string color) => $"background: {color};";
+    
+    private string Foreground(string color) => $"color: {color};";
+
     protected override void OnInitialized()
     {
         base.OnInitialized();
 
         Themes = ThemesRepository.GetAll().ToList();
-        SelectedTheme = Themes.FirstOrDefault() ?? DbTheme.Create();
 
+        if (!Themes.Any())
+        {
+            SelectedTheme = DbTheme.Create();
+            ThemesRepository.Create(SelectedTheme);
+            Themes = ThemesRepository.GetAll().ToList();
+        }
+        
+        SelectedTheme = Themes.First();
+        
         InvokeAsync(StateHasChanged);
     }
 
     private void Save()
     {
+        foreach (var theme in Themes)
+        {
+            ThemesRepository.Update(theme);
+        }
+
+        ThemesRepository.Update(SelectedTheme);
+        EventConfigService.Save();
         
     }
 
     private void AddNew()
     {
-        
+        Themes.Add(DbTheme.Create());
     }
-
-    private void UpdateColor(MudColor mudColor, ThemeColor color)
+    
+    private void Apply()
     {
-        // switch (color)
-        // {
-        //     case ThemeColor.Primary:
-        //         SelectedTheme.Primary = mudColor.Value;
-        //         break;
-        //     default:
-        //         throw new ArgumentOutOfRangeException(nameof(color), color, null);
-        // }
-
-        InvokeAsync(StateHasChanged);
+        EventConfigService.CurrentEvent.EventTheme = SelectedTheme;
     }
-
 }

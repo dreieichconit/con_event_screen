@@ -20,6 +20,12 @@
     <MudTextField 
         Label="Edit Config Name" 
         @bind-Value="EventConfigService.CurrentEvent.EventName" />
+    
+    <MudTextField
+        T="string"
+        Label="Current Theme" 
+        ReadOnly="true"
+        Text="@EventConfigService.CurrentEvent.EventTheme.ThemeName"/>
 
     <div class="d-flex flex-row gap-4">
         <MudButton @onclick="AddNew" Color="Color.Primary" Variant="Variant.Filled">Add New</MudButton>

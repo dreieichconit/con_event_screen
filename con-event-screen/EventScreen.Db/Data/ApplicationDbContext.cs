@@ -28,8 +28,6 @@ public class ApplicationDbContext : IdentityDbContext
 
 	public DbSet<Theme> Themes { get; set; } = null!;
 
-	public DbSet<ThemeSettings> ThemeSettings { get; set; } = null!;
-
 	public DbSet<MarqueeSettings> MarqueeSettings { get; set; } = null!;
 
 	public DbSet<Screen> Screens { get; set; } = null!;
@@ -38,12 +36,11 @@ public class ApplicationDbContext : IdentityDbContext
 
 	protected override void OnModelCreating(ModelBuilder builder)
 	{
-		builder.Entity<ThemeSettings>().Navigation(x => x.CurrentTheme).AutoInclude();
-
 		builder.Entity<ScreenSettings>().Navigation(x => x.Screens).AutoInclude();
 
 		builder.Entity<ActiveSetting>().Navigation(x => x.ActiveConfig).AutoInclude();
 		builder.Entity<EventConfig>().Navigation(x => x.EventScreens).AutoInclude();
+		builder.Entity<EventConfig>().Navigation(x => x.EventTheme).AutoInclude();
 		
 		base.OnModelCreating(builder);
 	}
