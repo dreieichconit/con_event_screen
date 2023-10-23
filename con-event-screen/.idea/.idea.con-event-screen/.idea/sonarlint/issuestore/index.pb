@@ -187,8 +187,6 @@ W
 'EventScreen.Db/Models/Settings/Theme.cs,2\b\2bd9198930fed1961e07224ed15417d6b9a33453
 ]
 -EventScreen.Db/Repositories/BaseRepository.cs,6\a\6ac28e2560b75858f2b7c5e8c38fced31bbb7ce9
-R
-"EventScreen.Db/Enums/ThemeColor.cs,0\5\058153cd83f0b511ae72eb122b517d55dd56470c
 T
 $EventScreen.WebUi/Pages/_Host.cshtml,7\5\75503dbc093fee6e1029b51699bfde4fac6bdc45
 ^

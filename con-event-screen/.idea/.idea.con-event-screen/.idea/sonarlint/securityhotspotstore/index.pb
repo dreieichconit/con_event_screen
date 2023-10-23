@@ -191,7 +191,5 @@ T
 $EventScreen.WebUi/Pages/_Host.cshtml,7\5\75503dbc093fee6e1029b51699bfde4fac6bdc45
 W
 'EventScreen.Db/Models/Settings/Theme.cs,2\b\2bd9198930fed1961e07224ed15417d6b9a33453
-R
-"EventScreen.Db/Enums/ThemeColor.cs,0\5\058153cd83f0b511ae72eb122b517d55dd56470c
 [
 +EventScreen.WebUi/Pages/Backend/Theme.razor,3\f\3f791b2af766cc8c221a4cbee5d4361b3456cea2
