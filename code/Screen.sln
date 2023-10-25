@@ -4,6 +4,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Screen.Ui", "Screen.Ui\Scre
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Screen.Db", "Screen.Db\Screen.Db.csproj", "{698AC00D-62B9-4B46-8EBB-1D9AE05DC157}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Screen.Services", "Screen.Services\Screen.Services.csproj", "{BFE66794-317B-4C2E-80E4-55CBBA6A7F50}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -18,5 +20,9 @@ Global
 		{698AC00D-62B9-4B46-8EBB-1D9AE05DC157}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{698AC00D-62B9-4B46-8EBB-1D9AE05DC157}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{698AC00D-62B9-4B46-8EBB-1D9AE05DC157}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFE66794-317B-4C2E-80E4-55CBBA6A7F50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFE66794-317B-4C2E-80E4-55CBBA6A7F50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFE66794-317B-4C2E-80E4-55CBBA6A7F50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFE66794-317B-4C2E-80E4-55CBBA6A7F50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
