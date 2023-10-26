@@ -1,0 +1,20 @@
+﻿@using Screen.Services.Interfaces
+@using Screen.Services.Implementation
+@inject IConfigurationService ConfigurationService
+
+<MudText Typo="Typo.h1">@EventName()</MudText>
+
+@code {
+    protected override void OnInitialized()
+    {
+        ConfigurationService.ConfigUpdated += (_, _) => InvokeAsync(StateHasChanged);
+        base.OnInitialized();
+    }
+
+    private string EventName()
+    {
+        if (ConfigurationService.CurrentConfiguration is null) return "No Event Selected";
+        return ConfigurationService.CurrentConfiguration.EventName;
+    }
+
+}

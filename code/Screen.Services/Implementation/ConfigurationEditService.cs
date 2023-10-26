@@ -1,4 +1,5 @@
-﻿using Screen.Db.Interfaces;
+﻿using EfExtensions.Core.Enum;
+using Screen.Db.Interfaces;
 using Screen.Db.Models;
 using Screen.Services.Interfaces;
 
@@ -14,13 +15,33 @@ public class ConfigurationEditService : IConfigurationEditService
         Init();
     }
 
+    public static event EventHandler? ConfigurationsChanged; 
+
     public List<Configuration> Configurations { get; set; }
     
     public Configuration? CurrentConfiguration { get; set; }
+
+    public bool Save()
+    {
+        var results = _configurationRepository.CrudMany(Configurations);
+        return results.All(x => x.Success);
+    }
     
-    private void Init()
+    public void Init()
     {
         Configurations = _configurationRepository.GetAll().ToList();
         CurrentConfiguration = Configurations.Find(x => x.IsActive);
+
+        if (CurrentConfiguration is null)
+        {
+            var config = Configuration.Create();
+            config.IsActive = true;
+            config.OperationType = Operation.Created;
+            Configurations.Add(config);
+            CurrentConfiguration = config;
+        }
+        Configurations.ForEach(x => x.OperationType = Operation.Updated);
+        
+        ConfigurationsChanged?.Invoke(null, EventArgs.Empty);
     }
 }

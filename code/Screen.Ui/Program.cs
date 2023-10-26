@@ -3,6 +3,8 @@ using MudBlazor.Services;
 using Screen.Db.Context;
 using Screen.Db.Interfaces;
 using Screen.Db.Repositories;
+using Screen.Services.Implementation;
+using Screen.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,7 +15,12 @@ builder.Services.AddMudServices();
 
 builder.Services.AddDbContextFactory<ScreenDbContext>(options => options.UseSqlite("Filename=screen.db"));
 
-builder.Services.AddScoped<IConfigurationRepository, ConfigurationRepository>();
+builder.Services.AddSingleton<IConfigurationRepository, ConfigurationRepository>();
+builder.Services.AddScoped<IConfigurationEditService, ConfigurationEditService>();
+builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
+
+builder.Services.AddSingleton<IImageRepository, ImageRepository>();
+builder.Services.AddSingleton<IImageService, ImageService>();
 
 var app = builder.Build();
 

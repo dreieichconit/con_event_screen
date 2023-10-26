@@ -20,8 +20,11 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Screen.Db\Screen.Db.csproj" />
+      <ProjectReference Include="..\Screen.Services\Screen.Services.csproj" />
     </ItemGroup>
 
-
-
+    <ItemGroup>
+      <Folder Include="wwwroot\img\" />
+    </ItemGroup>
+    
 </Project>
