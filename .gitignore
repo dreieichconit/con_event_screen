@@ -1,24 +1,4 @@
 
-con-event-screen/con-event-api/bin/*
-con-event-screen/con-event-api/obj/*
-
-con-event-screen/con-event-api.tests/bin/*
-con-event-screen/con-event-api.tests/obj/*
-
-con-event-screen/con-event-services/obj/*
-con-event-screen/con-event-services/bin/*
-
-
-con-event-screen/con-event-screen/bin/*
-con-event-screen/con-event-screen/obj/*
-con-event-screen/con-event-db/obj/*
-con-event-screen/con-event-db/bin/*
-con-event-screen/con-event-screen/ApiDb.db-shm
-
-con-event-screen/con-event-screen/ApiDb.db-wal
-
-.DS_Store
-
 .nuke/temp/
 
 **/bin/*
@@ -28,8 +8,10 @@ con-event-screen/con-event-screen/ApiDb.db-wal
 **/.idea/*
 *.pb
 
+**/*.db
+**/*.db-shm
+**/*.db-wal
+
 build/Credentials.cs
 
-*.db
-*.db-shm
-*.db-wal
+

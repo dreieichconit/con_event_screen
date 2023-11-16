@@ -1,0 +1,40 @@
+﻿@using Screen.Api.Models
+@using Screen.Api.Connectors
+@inherits PageModelPage
+
+<MudTable CurrentPage="@Pagination" Items="Games" Elevation="0" RowsPerPage="@Page.ItemsPerPage">
+    <ColGroup>
+        <col style="width: 30%;" />
+        <col style="width: 30%;"/>
+        <col />
+    </ColGroup>
+    <HeaderContent>
+        <MudTh>Titel</MudTh>
+        <MudTh>System</MudTh>
+        <MudTh>Start</MudTh>
+        <MudTh>Zeit bis Start</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd><MudText Typo="Typo.h6">@context.Title</MudText></MudTd>
+        <MudTd><MudText Typo="Typo.h6">@context.System</MudText></MudTd>
+        <MudTd><MudText Typo="Typo.h6">@context.Start.DayOfWeek @context.Start.ToString("HH:mm")</MudText></MudTd>
+    </RowTemplate>
+    <PagerContent>
+        <MudTablePager HideRowsPerPage="true" HidePagination="true"/>
+    </PagerContent>
+</MudTable>
+
+@code {
+    
+    [Parameter]
+    public int Pagination { get; set; }
+
+    public List<Game> Games { get; set; } = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        Games = (await ConservicesGameRepository.GetGamesAsync(Page.RequestUri)).Where(x => x.Start > DateTime.Now).ToList();
+    }
+
+}

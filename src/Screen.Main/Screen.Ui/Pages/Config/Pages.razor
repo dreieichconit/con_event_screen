@@ -1,0 +1,59 @@
+﻿@page "/Pages/{Id}"
+@using Screen.Services.Interfaces.Data
+@using Screen.Data.Models
+@using Page = Screen.Data.Models.Page
+@using EfExtensions.Core.Enum
+@using Screen.Data.Enum
+
+@inject IConfigurationService ConfigService
+
+<TableViewPage Title="@($"{Current.ConfigurationName} Pages")">
+    <ChildContent>
+         <MudDataGrid Items="Current.Pages" ReadOnly="false" EditMode="DataGridEditMode.Cell">
+             <Columns>
+                 <PropertyColumn Property="x => x.PageType"></PropertyColumn>
+                 <PropertyColumn Property="x => x.Position" Title="Display Position" />
+                 <PropertyColumn Property="x => x.SecondsVisible" Title="Seconds Per Page"/>
+                 <PropertyColumn Property="x => x.ItemsPerPage" Title="Items per Page"/>
+                 <PropertyColumn Property="x => x.Pagination" Title="Pages to Iterate"/>
+                 <PropertyColumn Property="x => x.RequestUri" Title="Request Uri"/>
+             </Columns>
+         </MudDataGrid>
+    </ChildContent>
+    <ButtonContent>
+          <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Add">Add New</MudButton>
+          <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Save">Save</MudButton>
+       </ButtonContent>
+</TableViewPage>
+
+@code {
+
+    [Parameter]
+    public required string Id { get; set; }
+    
+    public Configuration Current { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Current = ConfigService.Items.Find(x => x.Id == Id)!;
+    }
+    
+    private void Add()
+    {
+        var item = new Page()
+        {
+            ConfigurationId = Current.Id,
+            PageType = PageType.Text,
+            OperationType = Operation.Created,
+        };
+      
+        Current.Pages.Add(item);
+    }
+
+    private void Save()
+    {
+        ConfigService.Save();
+    }
+
+}

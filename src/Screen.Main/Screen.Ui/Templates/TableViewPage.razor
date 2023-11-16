@@ -1,0 +1,33 @@
+﻿<MudStack Class="d-flex h-100" Spacing="2" Justify="Justify.SpaceBetween">
+    <MudPaper Elevation="1" Class="p-3">
+        <MudText Typo="Typo.h5">@Title</MudText>
+    </MudPaper>
+    <MudPaper Class="d-flex flex-grow-1 flex-column" Elevation="1" Style="max-height: 85% !important;">
+        @ChildContent
+    </MudPaper>
+    <MudPaper>
+        <MudStack Row="true" AlignItems="AlignItems.End" Class="p-3">
+            @if (AlignButtonsRight)
+            {
+                <MudText Class="flex-grow-1"/>
+            }
+            @ButtonContent
+        </MudStack>
+    </MudPaper>
+</MudStack>
+
+@code {
+
+    [Parameter]
+    public required string Title { get; set; }
+
+    [Parameter]
+    public required RenderFragment ChildContent { get; set; }
+
+    [Parameter]
+    public required RenderFragment ButtonContent { get; set; }
+
+    [Parameter]
+    public bool AlignButtonsRight { get; set; } = true;
+
+}

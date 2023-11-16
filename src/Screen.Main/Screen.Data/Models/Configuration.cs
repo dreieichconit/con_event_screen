@@ -1,0 +1,17 @@
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using EfExtensions.Items.Model;
+
+namespace Screen.Data.Models;
+
+public class Configuration : DbItem<string>
+{
+	public string ConfigurationName { get; set; } = string.Empty;
+	
+	public bool Active { get; set; }
+
+	[NotMapped]
+	public List<Marquee> Marquees { get; set; } = new();
+
+	[NotMapped]
+	public List<Page> Pages { get; set; } = new();
+}

@@ -1,0 +1,15 @@
+﻿@using Screen.Data.Interfaces
+@using Screen.Services.Interfaces.Data
+@inject ICurrentConfigurationService ConfigService
+
+<MudText Typo="Typo.h1">@ConfigService.CurrentConfiguration?.ConfigurationName</MudText>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        ConfigService.ConfigurationUpdated += (_, _) => InvokeAsync(StateHasChanged);
+        base.OnInitialized();
+    }
+
+}

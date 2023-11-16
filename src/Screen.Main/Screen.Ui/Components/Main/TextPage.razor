@@ -1,0 +1,14 @@
+﻿@inherits PageModelPage
+
+@if (Text != null)
+{
+    <MudText Typo="Typo.h3">@Text</MudText>
+}
+
+
+@code {
+    
+    [Parameter]
+    public string? Text { get; set; }
+
+}
