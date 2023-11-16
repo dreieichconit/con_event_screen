@@ -6,39 +6,89 @@
 @using Screen.Data.Enum
 
 @inject IConfigurationService ConfigService
+@inject IImageService ImageService
 
 <TableViewPage Title="@($"{Current.ConfigurationName} Pages")">
     <ChildContent>
-         <MudDataGrid Items="Current.Pages" ReadOnly="false" EditMode="DataGridEditMode.Cell">
-             <Columns>
-                 <PropertyColumn Property="x => x.PageType"></PropertyColumn>
-                 <PropertyColumn Property="x => x.Position" Title="Display Position" />
-                 <PropertyColumn Property="x => x.SecondsVisible" Title="Seconds Per Page"/>
-                 <PropertyColumn Property="x => x.ItemsPerPage" Title="Items per Page"/>
-                 <PropertyColumn Property="x => x.Pagination" Title="Pages to Iterate"/>
-                 <PropertyColumn Property="x => x.RequestUri" Title="Request Uri"/>
-             </Columns>
-         </MudDataGrid>
+        <MudDataGrid Items="Current.Pages" ReadOnly="false" EditMode="DataGridEditMode.Form">
+            <Columns>
+                <PropertyColumn Property="x => x.PageType" Title="Page Type">
+                    <EditTemplate>
+                        <MudSelect @bind-Value="@context.Item.PageType" Variant="Variant.Outlined" Label="Page Type">
+                            @foreach (var type in Enum.GetValues<PageType>())
+                            {
+                                <MudSelectItem Value="@type">@type</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </EditTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.DisplayImage" Title="Image">
+                    <CellTemplate>
+                        @context.Item.DisplayImage?.Name
+                    </CellTemplate>
+                    <EditTemplate>
+                        @if (context.Item.PageType is PageType.Image)
+                        {
+                            <MudSelect @bind-Value="@context.Item.ImageId">
+                                <MudSelectItem Value="string.Empty">None</MudSelectItem>
+                                @foreach (var image in ImageService.Items)
+                                {
+                                    <MudSelectItem Value="@image.Id">@image.Name</MudSelectItem>
+                                }
+                            </MudSelect>
+                        }
+                    </EditTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Position" Title="Display Position"/>
+                <PropertyColumn Property="x => x.SecondsVisible" Title="Seconds Per Page"/>
+                <PropertyColumn Property="x => x.ItemsPerPage" Title="Items per Page">
+                    <EditTemplate>
+                        @if (context.Item.PageType is PageType.Games or PageType.Program)
+                        {
+                            <MudNumericField @bind-Value="@context.Item.ItemsPerPage"/>
+                        }
+                    </EditTemplate>
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.Pagination" Title="Pages to Iterate"/>
+                <PropertyColumn Property="x => x.DisplayText" Title="Custom Text" Required="false">
+
+                </PropertyColumn>
+                <PropertyColumn Property="x => x.RequestUri" Title="Request Uri">
+                    <EditTemplate>
+                        @if (context.Item.PageType is PageType.Games or PageType.Program)
+                        {
+                            <MudTextField @bind-Value="@context.Item.RequestUri" Label="Request Uri" Variant="Variant.Outlined" Required="false"/>
+                        }
+                    </EditTemplate>
+                </PropertyColumn>
+                <TemplateColumn>
+                    <CellTemplate>
+                        <MudIconButton Icon="@Icons.Material.Outlined.Edit" @onclick="@context.Actions.StartEditingItemAsync"></MudIconButton>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
     </ChildContent>
     <ButtonContent>
-          <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Add">Add New</MudButton>
-          <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Save">Save</MudButton>
-       </ButtonContent>
+        <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Add">Add New</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Save">Save</MudButton>
+    </ButtonContent>
 </TableViewPage>
 
 @code {
 
     [Parameter]
     public required string Id { get; set; }
-    
+
     public Configuration Current { get; set; }
 
     protected override void OnInitialized()
     {
         base.OnInitialized();
+        ImageService.Load();
         Current = ConfigService.Items.Find(x => x.Id == Id)!;
     }
-    
+
     private void Add()
     {
         var item = new Page()
@@ -47,13 +97,16 @@
             PageType = PageType.Text,
             OperationType = Operation.Created,
         };
-      
+
         Current.Pages.Add(item);
     }
 
     private void Save()
     {
         ConfigService.Save();
+        ConfigService.Load();
+        ImageService.Load();
+        InvokeAsync(StateHasChanged);
     }
 
 }

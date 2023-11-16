@@ -10,6 +10,8 @@ public class Table
     [JsonPropertyName("description")]
     public string? Description { get; set; }
 
-    [JsonIgnore]
-    public bool Accessible => Description?.ToLower() == "barrierefrei";
+    [JsonPropertyName("wheelchair_accessible")]
+    public int WheelChairAccessible { get; set; }
+
+    public bool Accessible => WheelChairAccessible > 0;
 }

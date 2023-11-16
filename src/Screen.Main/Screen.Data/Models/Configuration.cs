@@ -9,6 +9,8 @@ public class Configuration : DbItem<string>
 	
 	public bool Active { get; set; }
 	
+	public bool MarqueeScroll { get; set; }
+	
 	public string EventLogoId { get; set; }
 	
 	[NotMapped]

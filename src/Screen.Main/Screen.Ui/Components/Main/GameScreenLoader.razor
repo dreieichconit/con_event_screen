@@ -9,17 +9,17 @@
 @inject ICurrentConfigurationService ConfigService
 @inject NavigationManager NavManager
 
-<MudStack Style="overflow: hidden" Justify="Justify.Center" AlignItems="AlignItems.Center">
-@switch (PageQueue.CurrentPage?.PageType)
-{
-    case PageType.Text:
-        <GamePage Page="@PageQueue.CurrentPage" Pagination="@PageQueue.CurrentPagination" @ref="_current"/>
-        break;
-        
-    default:
-        <TextPage Text="There was no page..."/>
-        break;
-}
+<MudStack Style="overflow: hidden" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="h-100">
+    @switch (PageQueue.CurrentPage?.PageType)
+    {
+        case PageType.Games:
+            <GamePage Page="@PageQueue.CurrentPage" Pagination="@PageQueue.CurrentPagination" @ref="_current"/>
+            break;
+            
+        default:
+            <TextPage Text="There are no pages..."/>
+            break;
+    }
 </MudStack>
 
 @code {

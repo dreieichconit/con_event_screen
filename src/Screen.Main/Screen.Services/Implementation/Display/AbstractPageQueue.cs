@@ -1,4 +1,5 @@
 ﻿using Screen.Data.Models;
+using Serilog;
 
 namespace Screen.Services.Implementation.Display;
 
@@ -17,6 +18,10 @@ public abstract class AbstractPageQueue
     public int CurrentPagination { get; set; }
     
     public Page? CurrentPage { get; set; }
+    
+    public bool AnimateIn { get; set; }
+    
+    public bool AnimateOut { get; set; }
 
     protected List<Page> Pages { get; set; } = new();
     
@@ -30,24 +35,56 @@ public abstract class AbstractPageQueue
 
     protected virtual async Task Tick()
     {
+        SetAnimation();
         if (_currentScreenTime >= CurrentPage!.SecondsVisible)
         {
+            _currentScreenTime = 0;
+            
             if (IsNextPageNeeded())
             {
                 MoveToNextPage();
             }
             
             RefreshUi();
-            _currentScreenTime = 0;
             return;
         }
         
         RefreshUi();
         _currentScreenTime++;
     }
+
+    private void SetAnimation()
+    {
+        if (_currentScreenTime == 0)
+        {
+            AnimateIn = true;
+            RefreshUi();
+        }
+
+        if (_currentScreenTime == 1)
+        {
+            AnimateIn = false;
+            RefreshUi();
+        }
+
+        if (_currentScreenTime == CurrentPage!.SecondsVisible - 1)
+        {
+            AnimateOut = true;
+            RefreshUi();
+        }
+        
+        if (_currentScreenTime == CurrentPage!.SecondsVisible)
+        {
+            AnimateOut = false;
+            RefreshUi();
+        }
+            
+    }
     
     private async Task RunTimer()
     {
+        RefreshUi();
+        
         while (await _timer.WaitForNextTickAsync(_tokenSource.Token))
         {
             await Tick();
@@ -56,12 +93,12 @@ public abstract class AbstractPageQueue
 
     private bool IsNextPageNeeded()
     {
-        if (CurrentPage!.Pagination >= CurrentPagination)
+        if (CurrentPagination < CurrentPage!.Pagination)
         {
             CurrentPagination++;
             return false;
         }
-
+        
         CurrentPagination = 0;
         return true;
     }
@@ -72,6 +109,7 @@ public abstract class AbstractPageQueue
         else _pageIndex++;
 
         CurrentPage = Pages[_pageIndex];
+        SetAnimation();
     }
 
     private void RefreshUi() => UpdateUi?.Invoke(this, EventArgs.Empty);

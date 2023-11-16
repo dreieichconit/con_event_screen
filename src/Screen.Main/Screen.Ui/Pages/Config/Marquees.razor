@@ -1,9 +1,56 @@
 ﻿@page "/Marquees/{Id}"
-<h3>Marquees</h3>
+@using Screen.Services.Interfaces.Data
+@using Screen.Data.Models
+@using EfExtensions.Core.Enum
+
+@inject IConfigurationService ConfigService
+
+<TableViewPage Title="@($"{Current.ConfigurationName} Pages")">
+    <ChildContent>
+        <MudDataGrid Items="Current.Marquees" ReadOnly="false" EditMode="DataGridEditMode.Cell">
+            <Columns>
+                <PropertyColumn Property="x => x.Order"></PropertyColumn>
+                <PropertyColumn Property="x => x.Text"></PropertyColumn>
+            </Columns>
+        </MudDataGrid>
+    </ChildContent>
+    <ButtonContent>
+        <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Add">Add New</MudButton>
+        <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Save">Save</MudButton>
+    </ButtonContent>
+</TableViewPage>
 
 @code {
 
     [Parameter]
     public required string Id { get; set; }
+
+    public Configuration Current { get; set; }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Current = ConfigService.Items.Find(x => x.Id == Id)!;
+    }
+
+    private void Add()
+    {
+        var item = new Marquee()
+        {
+            ConfigurationId = Current.Id,
+            OperationType = Operation.Created,
+            Text = "please enter a Text"
+        };
+
+        Current.Marquees.Add(item);
+    }
+
+    private void Save()
+    {
+        ConfigService.Save();
+        ConfigService.Load();
+
+        InvokeAsync(StateHasChanged);
+    }
 
 }

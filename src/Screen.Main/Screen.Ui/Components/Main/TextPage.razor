@@ -1,9 +1,14 @@
 ﻿@inherits PageModelPage
 
-@if (Text != null)
-{
-    <MudText Typo="Typo.h3">@Text</MudText>
-}
+<MudStack Class="d-flex flex-grow-1" Justify="Justify.Center" AlignItems="AlignItems.Center">
+    @if (Text != null)
+    {
+        <MudText Typo="Typo.h1">@Text</MudText>
+    }
+    
+    <MudText Typo="Typo.h1">@Page.DisplayText</MudText>
+</MudStack>
+
 
 
 @code {

@@ -46,6 +46,12 @@ public class CurrentConfigurationService : ICurrentConfigurationService
             _pageRepository.GetAllCustom(x => x.ConfigurationId == CurrentConfiguration.Id).OrderBy(x => x.Position)
                 .ToList();
 
+        foreach (var page in CurrentConfiguration.Pages)
+        {
+            if (page.ImageId is null) continue;
+            page.DisplayImage = _imageRepository.Get(page.ImageId);
+        }
+
         CurrentConfiguration.EventLogo = _imageRepository.Get(CurrentConfiguration.EventLogoId);
         
             ConfigurationUpdated?.Invoke(this, EventArgs.Empty);

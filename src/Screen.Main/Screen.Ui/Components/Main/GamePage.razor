@@ -3,79 +3,81 @@
 @using System.Globalization
 @inherits PageModelPage
 
-<MudTable CurrentPage="@Pagination" Items="Games" Elevation="0" RowsPerPage="@Page.ItemsPerPage" Style="background: transparent; width: 100%" Outlined="false" Height="100%">
-    <ColGroup>
-        <col style="width: 25%"/>
-        <col style="width: 20%"/>
-        <col style="width: 15%"/>
-        <col style="width: 10%"/>
-        <col style="width: 10%"/>
-        <col style="width: 10%"/>
-    </ColGroup>
-    <HeaderContent>
-        <MudTh>
-            <MudText Typo="Typo.h5">
-                Titel
-            </MudText>
-        </MudTh>
-        <MudTh>
-            <MudText Typo="Typo.h5">
-                System
-            </MudText>
-        </MudTh>
-        <MudTh>
-            <MudText Typo="Typo.h5">
-                Tags
-            </MudText>
-        </MudTh>
-        <MudTh>
-            <MudText Typo="Typo.h5">
-                Raum
-            </MudText>
-        </MudTh>
-        <MudTh>
-            <MudText Typo="Typo.h5">
-                Plätze
-            </MudText>
-        </MudTh>
-        <MudTh>
-            <MudText Typo="Typo.h5">
-                Start
-            </MudText>
-        </MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd Style="margin: 1rem !important">
-            <MudText Typo="Typo.h6">@context.Title</MudText>
-        </MudTd>
-        <MudTd>
-            <MudText Typo="Typo.h6">@context.System</MudText>
-        </MudTd>
-        <MudTd>
-            <MudText Typo="Typo.h6">@context.LabelText</MudText>
-        </MudTd>
-        <MudTd>
-            <MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
-                <MudText Typo="Typo.h6">@context.TableText</MudText>
-                @if (context.Accessible)
-                {
-                    <MudIcon Icon="@Icons.Material.Filled.Accessible" Color="Color.Success" Size="Size.Large"/>
-                }
-            </MudStack>
-            
-        </MudTd>
-        <MudTd>
-            <MudText Typo="Typo.h5" Color="@GetColor(context)">@context.Players.Count / @context.MaxPlayers</MudText>
-        </MudTd>
-        <MudTd>
-            <MudText Typo="Typo.h6">@context.Start.ToString("dddd", _culture) @context.Start.ToString("HH:mm")</MudText>
-        </MudTd>
-    </RowTemplate>
-    <PagerContent>
-        <MudTablePager HideRowsPerPage="true" HidePagination="true"/>
-    </PagerContent>
-</MudTable>
+<MudStack Class="h-100 w-100 overflow-hidden" Justify="Justify.SpaceEvenly" AlignItems="AlignItems.Center">
+    <MudTable Class="d-flex flex-column" CurrentPage="@Pagination" Items="Games" Elevation="0" RowsPerPage="@Page.ItemsPerPage" Style="background: transparent; width: 100%" Outlined="false" Height="100%">
+        <ColGroup>
+            <col style="width: 25%"/>
+            <col style="width: 20%"/>
+            <col style="width: 15%"/>
+            <col style="width: 10%"/>
+            <col style="width: 10%"/>
+            <col style="width: 10%"/>
+        </ColGroup>
+        <HeaderContent>
+            <MudTh>
+                <MudText Typo="Typo.h5">
+                    Spielrunde
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.h5">
+                    System
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.h5">
+                    Tags
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.h5">
+                    Raum
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.h5">
+                    Plätze
+                </MudText>
+            </MudTh>
+            <MudTh>
+                <MudText Typo="Typo.h5">
+                    Start
+                </MudText>
+            </MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd Style="margin: 1rem !important">
+                <MudText Typo="Typo.h6">@context.Title</MudText>
+            </MudTd>
+            <MudTd>
+                <MudText Typo="Typo.h6">@context.System</MudText>
+            </MudTd>
+            <MudTd>
+                <MudText Typo="Typo.h6">@context.LabelText</MudText>
+            </MudTd>
+            <MudTd>
+                <MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
+                    <MudText Typo="Typo.h6">@context.TableText</MudText>
+                    @if (context.Accessible)
+                    {
+                        <MudIcon Icon="@Icons.Material.Filled.Accessible" Color="Color.Success" Size="Size.Large"/>
+                    }
+                </MudStack>
 
+            </MudTd>
+            <MudTd>
+                <MudText Typo="Typo.h5" Color="@GetColor(context)">@context.Players.Count / @context.MaxPlayers</MudText>
+            </MudTd>
+            <MudTd>
+                <MudText Typo="Typo.h6">@context.Start.ToString("dddd", _culture) @context.Start.ToString("HH:mm")</MudText>
+            </MudTd>
+        </RowTemplate>
+        <PagerContent>
+            <MudTablePager HideRowsPerPage="true" HidePagination="true"/>
+        </PagerContent>
+    </MudTable>
+    <MudText Typo="Typo.h2">@Page.DisplayText</MudText>
+</MudStack>
 @code {
 
     [Parameter]

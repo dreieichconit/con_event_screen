@@ -1,0 +1,61 @@
+﻿@using PageModel = Screen.Data.Models.Page;
+@using Screen.Services.Interfaces.Data
+@using Screen.Data.Enum
+@using Microsoft.Extensions.Logging
+@using Screen.Services.Interfaces.Display
+@using Serilog
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
+@using System.Text
+
+@inject ICurrentConfigurationService ConfigService
+@inject NavigationManager NavManager
+
+<MudStack Style="overflow: hidden" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="@($"h-100 {AnimatorClass}")">
+    @switch (PageQueue.CurrentPage?.PageType)
+    {
+        case PageType.Text:
+            <TextPage Page="@PageQueue.CurrentPage" @ref="_current"/>
+            break;
+            
+        case PageType.Image:
+            <ImagePage Page="@PageQueue.CurrentPage" @ref="_current"/>
+            break;
+            
+        default:
+            <TextPage Text="There are no pages..."/>
+            break;
+    }
+</MudStack>
+
+@code {
+    
+    [Inject(Key = "main")]
+    private IPageQueueService PageQueue { get; set; }
+
+    private PageModelPage _current = null!;
+    
+    private string AnimatorClass
+    {
+        get
+        {
+            var sb = new StringBuilder();
+            sb.Append("animate__animated ");
+            if (PageQueue.AnimateIn) sb.Append("animate__fadeIn");
+            if (PageQueue.AnimateOut) sb.Append("animate__fadeOut");
+            return sb.ToString();
+        }
+    }
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        PageQueue.UpdateUi += (_, _) =>
+        {
+            InvokeAsync(StateHasChanged);
+            _current.Update();
+        };
+       
+    }
+
+    
+}
