@@ -1,0 +1,14 @@
+﻿.skew{
+    display: inline-block;
+    width: 3vh !important;
+    height: 3vh !important;
+    transform: skew(45deg);
+    background: mediumvioletred;
+}
+
+.skew-inv{
+    width: 3vh !important;
+    height: 3vh !important;
+    transform: skew(45deg);
+    background: transparent;
+}

@@ -1,0 +1,18 @@
+﻿@for (var i = 0; i < 100; i++)
+{
+    if (i % 2 == 0)
+    {
+        <div class="@Class(true)"></div>
+    }
+    else
+    {
+        <div class="@Class(false)"></div>
+    }
+}
+
+
+@code {
+
+    private string Class(bool invert) => invert ? "skew-inv" : "skew";
+
+}

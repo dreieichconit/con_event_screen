@@ -2,11 +2,13 @@
 
 public interface IAlertService
 {
+    public event EventHandler? ReloadUi;
+    
     public bool Visible { get; set; }
     
-    public bool Title { get; set; }
+    public string Title { get; set; }
     
-    public bool AlertText { get; set; }
+    public string AlertText { get; set; }
 
     public void Toggle();
 }

@@ -42,7 +42,6 @@ builder.Services.AddSingleton<IPageRepository, PageRepository>();
 builder.Services.AddSingleton<IImageRepository, ImageRepository>();
 
 builder.Services.AddScoped<IImageService, ImageService>();
-
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 builder.Services.AddSingleton<ICurrentConfigurationService, CurrentConfigurationService>();
@@ -50,6 +49,7 @@ builder.Services.AddKeyedSingleton<IPageQueueService, GamePageQueueService>("gam
 builder.Services.AddKeyedSingleton<IPageQueueService, MainPageQueueService>("main");
 
 builder.Services.AddSingleton<IMarqueeService, MarqueeService>();
+builder.Services.AddSingleton<IAlertService, AlertService>();
 
 builder.Services.AddMudServices();
 

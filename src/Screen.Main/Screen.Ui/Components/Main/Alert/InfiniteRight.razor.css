@@ -1,0 +1,17 @@
+﻿.infinite-right{
+    width: 120vw;
+    animation: rightS 2s linear infinite;
+    display: flex;
+    position: relative;
+    top: 0;
+    left: -6vh;
+}
+
+@keyframes rightS {
+    0%{
+        left: -10vh;
+    }
+    100%{
+        left: -6vh;
+    }
+}

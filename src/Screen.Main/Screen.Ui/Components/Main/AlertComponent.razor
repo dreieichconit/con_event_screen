@@ -1,0 +1,36 @@
+﻿@using Screen.Services.Interfaces.Display
+@using Screen.Ui.Components.Main.Alert
+@inject IAlertService AlertService
+
+@if (AlertService.Visible)
+{
+    <div class="alert-main">
+        <div class="alert-container">
+            <div class="scroller mt-5 animate__animated animate__fadeInLeft">
+                <InfiniteLeft/>
+                <div class="bar"></div>
+                <InfiniteRight/>
+            </div>
+            <div class="alert-text d-flex flex-column align-items-center mt-5 mb-5 flex-grow-1">
+                <MudText Typo="Typo.h1">@AlertService.Title</MudText>
+                <MudText Typo="Typo.h2">@AlertService.AlertText</MudText>
+            </div>
+            <div class="scroller mb-5 animate__animated animate__fadeInRight">
+                <InfiniteLeft/>
+                <div class="bar"></div>
+                <InfiniteRight/>
+            </div>
+        </div>
+    </div>
+}
+
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        AlertService.ReloadUi += (_, _) => InvokeAsync(StateHasChanged);
+    }
+
+}
