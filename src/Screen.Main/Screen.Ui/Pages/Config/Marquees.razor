@@ -4,13 +4,25 @@
 @using EfExtensions.Core.Enum
 
 @inject IConfigurationService ConfigService
+@inject NavigationManager NavManager
 
 <TableViewPage Title="@($"{Current.ConfigurationName} Pages")">
     <ChildContent>
+        <MudStack Row="true" Class="p-3">
+            <MudCheckBox @bind-Checked="@Current.MarqueeScroll">Scroll Marquee?</MudCheckBox>
+            <MudNumericField Class="w-25" @bind-Value="@Current.MarqueeSpeed" Label="Scroll Duration (seconds)"></MudNumericField>
+            <MudSpacer/>
+        </MudStack>
+        <MudDivider Class="flex-grow-0"/>
         <MudDataGrid Items="Current.Marquees" ReadOnly="false" EditMode="DataGridEditMode.Cell">
             <Columns>
                 <PropertyColumn Property="x => x.Order"></PropertyColumn>
                 <PropertyColumn Property="x => x.Text"></PropertyColumn>
+                <PropertyColumn Property="x => x.Show">
+                    <EditTemplate>
+                        <MudCheckBox @bind-Checked="@context.Item.Show"/>
+                    </EditTemplate>
+                </PropertyColumn>
             </Columns>
         </MudDataGrid>
     </ChildContent>
@@ -49,8 +61,8 @@
     {
         ConfigService.Save();
         ConfigService.Load();
-
-        InvokeAsync(StateHasChanged);
+        
+        NavManager.NavigateTo($"/Marquees/{Id}", forceLoad:true);
     }
 
 }

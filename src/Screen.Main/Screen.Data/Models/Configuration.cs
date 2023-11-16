@@ -11,6 +11,8 @@ public class Configuration : DbItem<string>
 	
 	public bool MarqueeScroll { get; set; }
 	
+	public int MarqueeSpeed { get; set; }
+	
 	public string EventLogoId { get; set; }
 	
 	[NotMapped]

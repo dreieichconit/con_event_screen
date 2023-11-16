@@ -13,7 +13,7 @@
       <MudDataGrid Items="ConfigService.Items" ReadOnly="false" EditMode="DataGridEditMode.Cell">
          <Columns>
             <PropertyColumn Property="x => x.ConfigurationName" Title="Event Name"/>
-            <PropertyColumn Property="x => x.EventLogoId">
+            <PropertyColumn Property="x => x.EventLogoId" Title="Event Logo">
                <EditTemplate>
                   <MudSelect @bind-Value="@context.Item.EventLogoId">
                      <MudSelectItem Value="string.Empty">None</MudSelectItem>

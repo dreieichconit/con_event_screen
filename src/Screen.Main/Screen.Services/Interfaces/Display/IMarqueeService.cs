@@ -7,4 +7,6 @@ public interface IMarqueeService
     public string MarqueeText { get; }
     
     public bool Scroll { get; }
+
+    public int ScrollSpeed { get; }
 }

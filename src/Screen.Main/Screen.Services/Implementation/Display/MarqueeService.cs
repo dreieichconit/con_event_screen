@@ -20,10 +20,12 @@ public class MarqueeService : IMarqueeService
         get
         {
             if (_currentConfigurationService.CurrentConfiguration is { Marquees: not null })
-                return string.Join(" - ", _currentConfigurationService.CurrentConfiguration.Marquees.OrderBy(x => x.Order).Select(x => x.Text));
+                return string.Join(" - ", _currentConfigurationService.CurrentConfiguration.Marquees.Where(x => x.Show).OrderBy(x => x.Order).Select(x => x.Text));
             return string.Empty;
         }
     }
 
     public bool Scroll => _currentConfigurationService.CurrentConfiguration?.MarqueeScroll ?? false;
+
+    public int ScrollSpeed => _currentConfigurationService.CurrentConfiguration?.MarqueeSpeed ?? 60;
 }

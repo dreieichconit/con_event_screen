@@ -3,7 +3,9 @@
 
 <MudStack Row="true" Class="w-100 h-100 mh-100 mw-100 overflow-hidden">
     <div id="marquee">
-        <MudText Typo="Typo.h1">@MarqueeService.MarqueeText</MudText>
+        <div class="@Class" style="@Style">
+            <MudText Typo="Typo.h1" style="@Style">@MarqueeService.MarqueeText</MudText>
+        </div>
     </div>
 </MudStack>
 
@@ -14,5 +16,9 @@
         base.OnInitialized();
         MarqueeService.ReloadUi += (_, _) => InvokeAsync(StateHasChanged);
     }
+
+    public string Class => MarqueeService.Scroll ? "marquee-text anim" : "marquee-text";
+
+    public string Style => MarqueeService.Scroll ? $"animation-duration: {MarqueeService.ScrollSpeed}s !important" : "";
 
 }
