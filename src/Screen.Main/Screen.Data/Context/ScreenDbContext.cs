@@ -15,4 +15,6 @@ public class ScreenDbContext : DbContext
 	public DbSet<Marquee> Marquees { get; set; } = null!;
 
 	public DbSet<Page> Pages { get; set; } = null!;
+
+	public DbSet<Image> Images { get; set; } = null!;
 }

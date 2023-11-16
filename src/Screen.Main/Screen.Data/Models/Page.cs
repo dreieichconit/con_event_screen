@@ -1,4 +1,5 @@
-﻿using EfExtensions.Items.Model;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using EfExtensions.Items.Model;
 using Screen.Data.Enum;
 
 namespace Screen.Data.Models;
@@ -8,6 +9,13 @@ public class Page : DbItem<string>
 	public required string ConfigurationId { get; set; }
 	
 	public required PageType PageType { get; set; }
+	
+	public string? DisplayText { get; set; }
+	
+	public string? ImageId { get; set; }
+	
+	[NotMapped]
+	public Image? DisplayImage { get; set; }
 	
 	public int Position { get; set; }
 	

@@ -2,92 +2,43 @@
 @using Screen.Services.Interfaces.Data
 @using Screen.Data.Enum
 @using Microsoft.Extensions.Logging
+@using Screen.Services.Interfaces.Display
 @using Serilog
+@using Microsoft.EntityFrameworkCore.Metadata.Internal
 
 @inject ICurrentConfigurationService ConfigService
 @inject NavigationManager NavManager
 
-@switch (CurrentPage.PageType)
+<MudStack Style="overflow: hidden" Justify="Justify.Center" AlignItems="AlignItems.Center">
+@switch (PageQueue.CurrentPage?.PageType)
 {
     case PageType.Text:
-        <GamePage Page="@CurrentPage" Pagination="@CurrentPagination" @ref="_currentItem"/>
+        <GamePage Page="@PageQueue.CurrentPage" Pagination="@PageQueue.CurrentPagination" @ref="_current"/>
         break;
         
     default:
-        <TextPage Text="There was no page..." @ref="_currentItem"/>
+        <TextPage Text="There was no page..."/>
         break;
 }
+</MudStack>
 
 @code {
-
-    private PageModelPage _currentItem = null!;
-
-    private PeriodicTimer _timer = new (TimeSpan.FromSeconds(1));
-
-    private int _currentScreenTime = 0;
-
-    public int CurrentPagination { get; set; } = 0;
     
-    private int _pageIndex = 0;
+    [Inject(Key = "games")]
+    private IPageQueueService PageQueue { get; set; }
 
-    private List<PageModel> Pages => ConfigService.CurrentConfiguration?.Pages ?? new List<PageModel>();
-
-    private PageModel CurrentPage { get; set; }
+    private PageModelPage _current = null!;
     
     protected override void OnInitialized()
     {
         base.OnInitialized();
-        ConfigService.ConfigurationUpdated += (_, _) => InvokeAsync(StateHasChanged);
-
-        CurrentPage = Pages.First();
-        Task.Run(StartTimer);
-    }
-
-    private async void StartTimer()
-    {
-        while (await _timer.WaitForNextTickAsync(CancellationToken.None))
+        PageQueue.UpdateUi += (_, _) =>
         {
-            CalculateChange();
-        }
+            InvokeAsync(StateHasChanged);
+            _current.Update();
+        };
+       
     }
 
-    private void CalculateChange()
-    {
-        if (_currentScreenTime >= CurrentPage.SecondsVisible)
-        {
-            if (CalculatePagination())
-            {
-                FlipPage();
-            }
-
-            _currentScreenTime = 0;
-            return;
-        }
-        
-        InvokeAsync(StateHasChanged);
-        _currentScreenTime++;
-    }
-
-    private bool CalculatePagination()
-    {
-        if (CurrentPage.Pagination >= CurrentPagination)
-        {
-            CurrentPagination++;
-            return false;
-        }
-        
-        CurrentPagination = 0;
-        return true;
-    }
-
-    private void FlipPage()
-    {
-        if (_pageIndex >= Pages.Count() - 1) _pageIndex = 0;
-        else _pageIndex++;
-
-        CurrentPage = Pages[_pageIndex];
-        InvokeAsync(StateHasChanged);
-        _currentItem.Update();
-    }
     
 }

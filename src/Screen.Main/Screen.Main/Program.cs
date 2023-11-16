@@ -1,20 +1,30 @@
+using System.Globalization;
 using Microsoft.EntityFrameworkCore;
 using MudBlazor.Services;
 using Screen.Data.Context;
 using Screen.Data.Interfaces;
 using Screen.Data.Repositories;
 using Screen.Services.Implementation.Data;
+using Screen.Services.Implementation.Display;
 using Screen.Services.Interfaces.Data;
+using Screen.Services.Interfaces.Display;
 using Serilog;
 
+Log.Logger = new LoggerConfiguration()
+	.MinimumLevel.Verbose()
+	.WriteTo.Trace()
+	.WriteTo.Debug()
+	.WriteTo.Console()
+	.CreateLogger();
+
+var cultureInfo = new CultureInfo("de-de");
+cultureInfo.NumberFormat.CurrencySymbol = "€";
+CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
+CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
+	
 var builder = WebApplication.CreateBuilder(args);
 
-Log.Logger = new LoggerConfiguration()
-			.MinimumLevel.Verbose()
-			.WriteTo.Trace()
-			.WriteTo.Debug()
-			.WriteTo.Console()
-			.CreateLogger();
+
 
 // Add services to the container.
 builder.Services.AddRazorPages();
@@ -29,10 +39,14 @@ builder.Services.AddDbContext<ScreenDbContext>(options => options.UseSqlite(conn
 builder.Services.AddSingleton<IConfigurationRepository, ConfigurationRepository>();
 builder.Services.AddSingleton<IMarqueeRepository, MarqueeRepository>();
 builder.Services.AddSingleton<IPageRepository, PageRepository>();
+builder.Services.AddSingleton<IImageRepository, ImageRepository>();
+
+builder.Services.AddScoped<IImageService, ImageService>();
 
 builder.Services.AddScoped<IConfigurationService, ConfigurationService>();
 
 builder.Services.AddSingleton<ICurrentConfigurationService, CurrentConfigurationService>();
+builder.Services.AddKeyedSingleton<IPageQueueService, GamePageQueueService>("games");
 
 builder.Services.AddMudServices();
 

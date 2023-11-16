@@ -1,0 +1,129 @@
+﻿@page "/Images"
+@using Screen.Data.Models
+@using System.Diagnostics
+@using EfExtensions.Core.Enum
+@using Microsoft.AspNetCore.Components.Forms
+@using Screen.Services.Interfaces.Data
+
+@inject IImageService ImageService
+@inject ISnackbar Snackbar
+
+<MudStack Justify="Justify.SpaceBetween" Class="h-100">
+    <MudPaper Class="p-3">
+        <h3>Images</h3>
+    </MudPaper>
+    <MudPaper Class="flex-grow-1">
+        <MudDataGrid T="Image" Items="ImageService.Items" ReadOnly="false" EditMode="DataGridEditMode.Cell">
+            <Columns>
+                <PropertyColumn Property="x => x.Name" Title="Image Name"/>
+                <TemplateColumn Title="Image Preview">
+                    <CellTemplate>
+                        <MudButton>
+                            <MudImage Src="@context.Item.ImageSource" Height="100"></MudImage>
+                        </MudButton>
+                    </CellTemplate>
+                    <EditTemplate>
+                        <MudImage Src="@context.Item.ImageSource" Height="100"></MudImage>
+                    </EditTemplate>
+                </TemplateColumn>
+                <TemplateColumn Title="Actions">
+                    <CellTemplate>
+                        <MudStack Row="true">
+                            <MudIconButton Icon="@Icons.Material.Outlined.Delete" @onclick="() => DeleteFile(context.Item)"/>
+                        </MudStack>
+                    </CellTemplate>
+                </TemplateColumn>
+            </Columns>
+        </MudDataGrid>
+    </MudPaper>
+    <MudPaper Class="p-3">
+        <MudStack Row="true" AlignItems="AlignItems.Center">
+            <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Save">Save</MudButton>
+            <MudFileUpload T="IBrowserFile" FilesChanged="FileChanged" Class="m-0" MaximumFileCount="1" Accept=".png, .jpg, .jpeg">
+                <ButtonTemplate>
+                    <MudButton HtmlTag="label"
+                               Style="margin: 0"
+                               Variant="Variant.Outlined"
+                               Color="Color.Primary"
+                               StartIcon="@Icons.Material.Filled.Image"
+                               for="@context">
+                        Add New File
+                    </MudButton>
+                </ButtonTemplate>
+            </MudFileUpload>
+            @if (CurrentFile is not null)
+            {
+                <MudText>@CurrentFile?.Name</MudText>
+                <MudButton Variant="Variant.Outlined" Color="Color.Primary" @onclick="UploadFile">Upload</MudButton>
+            }
+        </MudStack>
+    </MudPaper>
+</MudStack>
+
+@code {
+
+    protected override void OnInitialized()
+    {
+        ImageService.Load();
+        base.OnInitialized();
+    }
+
+    private IBrowserFile? CurrentFile { get; set; }
+    
+    private void FileChanged(IBrowserFile file)
+    {
+        CurrentFile = file;
+        Snackbar.Add(file.Name);
+        Trace.WriteLine(file.Name);
+        Console.Write(file.Name);
+    }
+
+    private void SaveInternal()
+    {
+        var result = ImageService.Save();
+
+        if (result.All(x => x.Success)) Snackbar.Add("Successfully saved.", Severity.Success);
+        else Snackbar.Add("Error while saving.", Severity.Error);
+        
+        ImageService.Load();
+    }
+
+    private async Task DeleteFile(Image image)
+    {
+        image.OperationType = Operation.Removed;
+        SaveInternal();
+    }
+
+    private async Task UploadFile()
+    {
+        var extension = CurrentFile!.Name.Split(".")[1];
+        var path = $"./wwwroot/img/upload/";
+        var filePath = $"{path}{Guid.NewGuid()}.{extension}";
+
+        if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+
+        await using FileStream fs = new(filePath, FileMode.Create);
+        await CurrentFile.OpenReadStream(maxAllowedSize: 2048000).CopyToAsync(fs);
+
+        var image = new Image()
+        {
+            FilePath = filePath,
+            Name = "New Image",
+            OperationType = Operation.Created
+        };
+        
+        ImageService.Items.Add(image);
+        var result = ImageService.Save();
+
+        if (result.All(x => x.Success)) Snackbar.Add("Uploaded successfully.", Severity.Success);
+        else Snackbar.Add("Error while uploading.", Severity.Error);
+
+        CurrentFile = null;
+        ImageService.Load();
+    }
+    
+    private void Save()
+    {
+        SaveInternal();
+    }
+}

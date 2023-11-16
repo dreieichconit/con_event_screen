@@ -1,23 +1,75 @@
 ﻿@using Screen.Api.Models
 @using Screen.Api.Connectors
+@using System.Globalization
 @inherits PageModelPage
 
-<MudTable CurrentPage="@Pagination" Items="Games" Elevation="0" RowsPerPage="@Page.ItemsPerPage">
+<MudTable CurrentPage="@Pagination" Items="Games" Elevation="0" RowsPerPage="@Page.ItemsPerPage" Style="background: transparent; width: 100%" Outlined="false" Height="100%">
     <ColGroup>
-        <col style="width: 30%;" />
-        <col style="width: 30%;"/>
-        <col />
+        <col style="width: 25%"/>
+        <col style="width: 20%"/>
+        <col style="width: 15%"/>
+        <col style="width: 10%"/>
+        <col style="width: 10%"/>
+        <col style="width: 10%"/>
     </ColGroup>
     <HeaderContent>
-        <MudTh>Titel</MudTh>
-        <MudTh>System</MudTh>
-        <MudTh>Start</MudTh>
-        <MudTh>Zeit bis Start</MudTh>
+        <MudTh>
+            <MudText Typo="Typo.h5">
+                Titel
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.h5">
+                System
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.h5">
+                Tags
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.h5">
+                Raum
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.h5">
+                Plätze
+            </MudText>
+        </MudTh>
+        <MudTh>
+            <MudText Typo="Typo.h5">
+                Start
+            </MudText>
+        </MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd><MudText Typo="Typo.h6">@context.Title</MudText></MudTd>
-        <MudTd><MudText Typo="Typo.h6">@context.System</MudText></MudTd>
-        <MudTd><MudText Typo="Typo.h6">@context.Start.DayOfWeek @context.Start.ToString("HH:mm")</MudText></MudTd>
+        <MudTd Style="margin: 1rem !important">
+            <MudText Typo="Typo.h6">@context.Title</MudText>
+        </MudTd>
+        <MudTd>
+            <MudText Typo="Typo.h6">@context.System</MudText>
+        </MudTd>
+        <MudTd>
+            <MudText Typo="Typo.h6">@context.LabelText</MudText>
+        </MudTd>
+        <MudTd>
+            <MudStack Row="true" Justify="Justify.FlexStart" AlignItems="AlignItems.Center">
+                <MudText Typo="Typo.h6">@context.TableText</MudText>
+                @if (context.Accessible)
+                {
+                    <MudIcon Icon="@Icons.Material.Filled.Accessible" Color="Color.Success" Size="Size.Large"/>
+                }
+            </MudStack>
+            
+        </MudTd>
+        <MudTd>
+            <MudText Typo="Typo.h5" Color="@GetColor(context)">@context.Players.Count / @context.MaxPlayers</MudText>
+        </MudTd>
+        <MudTd>
+            <MudText Typo="Typo.h6">@context.Start.ToString("dddd", _culture) @context.Start.ToString("HH:mm")</MudText>
+        </MudTd>
     </RowTemplate>
     <PagerContent>
         <MudTablePager HideRowsPerPage="true" HidePagination="true"/>
@@ -25,11 +77,18 @@
 </MudTable>
 
 @code {
-    
+
     [Parameter]
     public int Pagination { get; set; }
 
     public List<Game> Games { get; set; } = new();
+
+    private CultureInfo _culture = new("de-de");
+
+    private Color GetColor(Game item)
+    {
+        return item.Players.Count < item.MaxPlayers ? Color.Success : Color.Default;
+    }
 
     protected override async Task OnInitializedAsync()
     {

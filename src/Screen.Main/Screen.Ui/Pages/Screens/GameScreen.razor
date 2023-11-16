@@ -1,0 +1,22 @@
+﻿@page "/GameScreen"
+@layout ScreenLayout
+@using Screen.Ui.Layouts
+@using Screen.Ui.Components.Layout
+@using Screen.Ui.Components.Main
+@using Screen.Services.Interfaces.Data
+@inject ICurrentConfigurationService CurrentConfigurationService
+
+@if (CurrentConfigurationService.CurrentConfiguration is null)
+{
+    <MudText Typo="Typo.h1">Please create and select an active Configuration</MudText>
+}
+else{
+<MudStack Justify="Justify.SpaceBetween" Class="h-100">
+    <HeaderContent/>
+    <ScreenLoader/>
+</MudStack>
+}
+
+@code {
+    
+}

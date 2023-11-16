@@ -1,7 +1,20 @@
-﻿<h3>EventLogo</h3>
+﻿@using Screen.Services.Interfaces.Data
+@inject ICurrentConfigurationService ConfigService
+
+<div class="h-100 mh-100 event-logo-container" style="@($"border: 3px solid {Theme.Palette.Primary}")">
+    <img src="@LogoSource" alt="Event Logo" class="event-logo"/>
+</div>
 
 @code {
 
-    
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        ConfigService.ConfigurationUpdated += (_, _) => InvokeAsync(StateHasChanged);
+    }
+
+    private string LogoSource => ConfigService.CurrentConfiguration?.EventLogo?.ImageSource ?? "";
+
+    private MudTheme Theme = new ();
 
 }

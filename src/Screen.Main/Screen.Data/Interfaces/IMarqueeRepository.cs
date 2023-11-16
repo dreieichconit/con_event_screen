@@ -3,7 +3,4 @@ using Screen.Data.Models;
 
 namespace Screen.Data.Interfaces;
 
-public interface IMarqueeRepository : IBaseKeyedRepository<Marquee, string>
-{
-	
-}
+public interface IMarqueeRepository : IBaseKeyedRepository<Marquee, string>;

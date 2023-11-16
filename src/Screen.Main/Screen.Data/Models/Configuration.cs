@@ -8,6 +8,11 @@ public class Configuration : DbItem<string>
 	public string ConfigurationName { get; set; } = string.Empty;
 	
 	public bool Active { get; set; }
+	
+	public string EventLogoId { get; set; }
+	
+	[NotMapped]
+	public Image? EventLogo { get; set; }
 
 	[NotMapped]
 	public List<Marquee> Marquees { get; set; } = new();

@@ -3,4 +3,4 @@ using Screen.Data.Models;
 
 namespace Screen.Data.Interfaces;
 
-public interface IPageRepository : IBaseKeyedRepository<Page, string>;
+public interface IImageRepository : IBaseKeyedRepository<Image, string>;

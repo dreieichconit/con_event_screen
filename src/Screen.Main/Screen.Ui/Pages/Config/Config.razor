@@ -3,7 +3,9 @@
 @using Screen.Data.Models
 @using EfExtensions.Core.Enum
 @using Screen.Services.Implementation.Data
+
 @inject IConfigurationService ConfigService
+@inject IImageService ImageService
 @inject NavigationManager NavManager
 
 <TableViewPage Title="Configurations">
@@ -11,6 +13,17 @@
       <MudDataGrid Items="ConfigService.Items" ReadOnly="false" EditMode="DataGridEditMode.Cell">
          <Columns>
             <PropertyColumn Property="x => x.ConfigurationName" Title="Event Name"/>
+            <PropertyColumn Property="x => x.EventLogoId">
+               <EditTemplate>
+                  <MudSelect @bind-Value="@context.Item.EventLogoId">
+                     <MudSelectItem Value="string.Empty">None</MudSelectItem>
+                     @foreach (var image in ImageService.Items)
+                     {
+                        <MudSelectItem Value="@image.Id">@image.Name</MudSelectItem>
+                     }
+                  </MudSelect>
+               </EditTemplate>
+            </PropertyColumn>
             <PropertyColumn Property="x => x.Marquees" Title="Marquees">
                <EditTemplate>
                   <MudButton @onclick="() => EditMarquees(context.Item)">Edit Marquees</MudButton>
@@ -39,6 +52,7 @@
 
    protected override void OnInitialized()
    {
+      ImageService.Load();
       ConfigurationService.ItemsUpdated += (_, _) => InvokeAsync(StateHasChanged);
       base.OnInitialized();
    }
