@@ -24,8 +24,8 @@
 
 @code {
     
-    [Inject(Key = "games")]
-    private IPageQueueService PageQueue { get; set; }
+    [Inject]
+    private IGamePageQueueService PageQueue { get; set; }
 
     private PageModelPage _current = null!;
     

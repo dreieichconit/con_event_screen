@@ -18,7 +18,12 @@ public class MainPageQueueService : AbstractPageQueue, IPageQueueService
 
     private void Reload()
     {
-        Pages = _configService.CurrentConfiguration?.Pages.Where(x => x.PageType != PageType.Games).ToList() ?? new List<Page>();
+        Pages = _configService.CurrentConfiguration?.Pages.Where(x => x.PageType != PageType.Games).ToList() ?? new List<Page>(){new Page()
+        {
+            PageType = PageType.Text,
+            ConfigurationId = "",
+            DisplayText = "NO PAGES FOUND"
+        }};
         CurrentPage = Pages.FirstOrDefault();
         RestartTimer();
     }

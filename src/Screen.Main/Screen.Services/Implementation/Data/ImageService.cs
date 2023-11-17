@@ -6,17 +6,24 @@ using Screen.Services.Util;
 
 namespace Screen.Services.Implementation.Data;
 
-public class ImageService(IImageRepository imageRepository) : IImageService
+public class ImageService : IImageService
 {
+    private readonly IImageRepository _imageRepository;
+
+    public ImageService(IImageRepository imageRepository)
+    {
+        _imageRepository = imageRepository;
+    }
+    
     public List<Image> Items { get; set; } = new();
     
     public IEnumerable<IDbResult<Image>> Save()
     {
-        return imageRepository.CrudMany(Items);
+        return _imageRepository.CrudMany(Items);
     }
 
     public void Load()
     {
-        Items = imageRepository.GetAll().SetUpdated().ToList();
+        Items = _imageRepository.GetAll().SetUpdated().ToList();
     }
 }

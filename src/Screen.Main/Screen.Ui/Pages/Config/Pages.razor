@@ -45,7 +45,7 @@
                     <EditTemplate>
                         @if (context.Item.PageType is PageType.Games or PageType.Program)
                         {
-                            <MudNumericField @bind-Value="@context.Item.ItemsPerPage"/>
+                            <MudNumericField @bind-Value="@context.Item.ItemsPerPage" Variant="Variant.Outlined" Label="Items per Page"/>
                         }
                     </EditTemplate>
                 </PropertyColumn>

@@ -8,45 +8,47 @@
 @inject IImageService ImageService
 @inject NavigationManager NavManager
 
-<TableViewPage Title="Configurations">
-   <ChildContent>
-      <MudDataGrid Items="ConfigService.Items" ReadOnly="false" EditMode="DataGridEditMode.Cell">
-         <Columns>
-            <PropertyColumn Property="x => x.ConfigurationName" Title="Event Name"/>
-            <PropertyColumn Property="x => x.EventLogoId" Title="Event Logo">
-               <EditTemplate>
-                  <MudSelect @bind-Value="@context.Item.EventLogoId">
-                     <MudSelectItem Value="string.Empty">None</MudSelectItem>
-                     @foreach (var image in ImageService.Items)
-                     {
-                        <MudSelectItem Value="@image.Id">@image.Name</MudSelectItem>
-                     }
-                  </MudSelect>
-               </EditTemplate>
-            </PropertyColumn>
-            <PropertyColumn Property="x => x.Marquees" Title="Marquees">
-               <EditTemplate>
-                  <MudButton @onclick="() => EditMarquees(context.Item)">Edit Marquees</MudButton>
-               </EditTemplate>
-            </PropertyColumn>
-            <PropertyColumn Property="x => x.Pages" Title="Pages">
-               <EditTemplate>
-                  <MudButton @onclick="() => EditPages(context.Item)">Edit Pages</MudButton>
-               </EditTemplate>
-            </PropertyColumn>
-            <PropertyColumn Property="x => x.Active">
-               <EditTemplate>
-                  <MudCheckBox T="bool" @bind-Checked="context.Item.Active"/>
-               </EditTemplate>
-            </PropertyColumn>
-         </Columns>
-      </MudDataGrid>
-   </ChildContent> 
-   <ButtonContent>
-      <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Add">Add New</MudButton>
-      <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Save">Save</MudButton>
-   </ButtonContent>
-</TableViewPage>
+<AuthorizedPage>
+   <TableViewPage Title="Configurations">
+      <ChildContent>
+         <MudDataGrid Items="ConfigService.Items" ReadOnly="false" EditMode="DataGridEditMode.Cell">
+            <Columns>
+               <PropertyColumn Property="x => x.ConfigurationName" Title="Event Name"/>
+               <PropertyColumn Property="x => x.EventLogoId" Title="Event Logo">
+                  <EditTemplate>
+                     <MudSelect @bind-Value="@context.Item.EventLogoId">
+                        <MudSelectItem Value="string.Empty">None</MudSelectItem>
+                        @foreach (var image in ImageService.Items)
+                        {
+                           <MudSelectItem Value="@image.Id">@image.Name</MudSelectItem>
+                        }
+                     </MudSelect>
+                  </EditTemplate>
+               </PropertyColumn>
+               <PropertyColumn Property="x => x.Marquees" Title="Marquees">
+                  <EditTemplate>
+                     <MudButton @onclick="() => EditMarquees(context.Item)">Edit Marquees</MudButton>
+                  </EditTemplate>
+               </PropertyColumn>
+               <PropertyColumn Property="x => x.Pages" Title="Pages">
+                  <EditTemplate>
+                     <MudButton @onclick="() => EditPages(context.Item)">Edit Pages</MudButton>
+                  </EditTemplate>
+               </PropertyColumn>
+               <PropertyColumn Property="x => x.Active">
+                  <EditTemplate>
+                     <MudCheckBox T="bool" @bind-Checked="context.Item.Active"/>
+                  </EditTemplate>
+               </PropertyColumn>
+            </Columns>
+         </MudDataGrid>
+      </ChildContent> 
+      <ButtonContent>
+         <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Add">Add New</MudButton>
+         <MudButton Variant="Variant.Outlined" Color="Color.Success" @onclick="Save">Save</MudButton>
+      </ButtonContent>
+   </TableViewPage>
+</AuthorizedPage>
 
 @code {
 

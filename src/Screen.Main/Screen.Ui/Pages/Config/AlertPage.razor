@@ -2,32 +2,34 @@
 @using Screen.Services.Interfaces.Display
 @inject IAlertService AlertService
 
-<MudContainer Class="d-flex justify-content-center align-items-center h-100" MaxWidth="MaxWidth.Medium">
-    <MudPaper Class="p-3 flex-grow-1">
-        <MudStack AlignItems="AlignItems.Center">
-            <MudStack Row="true" AlignItems="AlignItems.Center">
-                <MudText>Alert Status</MudText>
-                <MudToggleIconButton
-                    Toggled="AlertService.Visible"
-                    ToggledColor="Color.Error"
-                    ToggledIcon="@Icons.Material.Filled.CrisisAlert"
-                    Icon="@Icons.Material.Filled.AlarmOff"
-                    ToggledChanged="() => AlertService.Toggle()">
-                </MudToggleIconButton>
-                @if (AlertService.Visible)
-                {
-                    <MudText Color="Color.Error">ACTIVE</MudText>
-                }
-                else
-                {
-                    <MudText>Off.</MudText>
-                }
+<AuthorizedPage>
+    <MudContainer Class="d-flex justify-content-center align-items-center h-100" MaxWidth="MaxWidth.Medium">
+        <MudPaper Class="p-3 flex-grow-1">
+            <MudStack AlignItems="AlignItems.Center">
+                <MudStack Row="true" AlignItems="AlignItems.Center">
+                    <MudText>Alert Status</MudText>
+                    <MudToggleIconButton
+                        Toggled="AlertService.Visible"
+                        ToggledColor="Color.Error"
+                        ToggledIcon="@Icons.Material.Filled.CrisisAlert"
+                        Icon="@Icons.Material.Filled.AlarmOff"
+                        ToggledChanged="() => AlertService.Toggle()">
+                    </MudToggleIconButton>
+                    @if (AlertService.Visible)
+                    {
+                        <MudText Color="Color.Error">ACTIVE</MudText>
+                    }
+                    else
+                    {
+                        <MudText>Off.</MudText>
+                    }
+                </MudStack>
+                <MudTextField @bind-Value="AlertService.Title" Label="Title" Class="w-100" />
+                <MudTextField @bind-Value="AlertService.AlertText" Label="Text" Lines="4" Class="w-100"/>
             </MudStack>
-            <MudTextField @bind-Value="AlertService.Title" Label="Title" Class="w-100" />
-            <MudTextField @bind-Value="AlertService.AlertText" Label="Text" Lines="4" Class="w-100"/>
-        </MudStack>
-    </MudPaper>
-</MudContainer>
+        </MudPaper>
+    </MudContainer>
+</AuthorizedPage>
 
 @code {
     

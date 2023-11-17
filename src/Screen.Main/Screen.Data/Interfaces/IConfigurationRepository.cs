@@ -3,4 +3,7 @@ using Screen.Data.Models;
 
 namespace Screen.Data.Interfaces;
 
-public interface IConfigurationRepository : IBaseKeyedRepository<Configuration, string>;
+public interface IConfigurationRepository : IBaseKeyedRepository<Configuration, string>
+{
+	
+}

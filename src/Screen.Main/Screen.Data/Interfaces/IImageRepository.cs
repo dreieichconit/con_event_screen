@@ -3,4 +3,7 @@ using Screen.Data.Models;
 
 namespace Screen.Data.Interfaces;
 
-public interface IImageRepository : IBaseKeyedRepository<Image, string>;
+public interface IImageRepository : IBaseKeyedRepository<Image, string>
+{
+	
+}

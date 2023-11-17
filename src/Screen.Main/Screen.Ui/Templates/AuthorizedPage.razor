@@ -1,0 +1,40 @@
+﻿@using Screen.Services.Interfaces.Auth
+@inject IPasswordService PasswordService
+
+@if (Authorized)
+{
+    @ChildContent
+}
+else
+{
+    <MudContainer Class="h-100" MaxWidth="MaxWidth.Large">
+        <MudStack Justify="Justify.Center" AlignItems="AlignItems.Center">
+            <MudTextField T="string"
+                         @onkeydown="Keydown" @bind-Value="EnteredText" Variant="Variant.Outlined" InputType="InputType.Password"/>
+        <MudButton @onclick="Authorize">Login</MudButton>
+            </MudStack>
+    </MudContainer>
+    
+}
+
+@code {
+
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    
+    public bool Authorized { get; set; }
+    
+    private string? EnteredText { get; set; }
+
+    private async Task Keydown(KeyboardEventArgs e)
+    {
+        if (e.Code == "enter") 
+            await Authorize();
+    }
+
+    private async Task Authorize()
+    {
+        Authorized = PasswordService.Login(EnteredText);
+    }
+
+}

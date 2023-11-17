@@ -5,7 +5,7 @@ using Screen.Services.Interfaces.Display;
 
 namespace Screen.Services.Implementation.Display;
 
-public class GamePageQueueService : AbstractPageQueue, IPageQueueService
+public class GamePageQueueService : AbstractPageQueue, IGamePageQueueService
 {
     private readonly ICurrentConfigurationService _configService;
 

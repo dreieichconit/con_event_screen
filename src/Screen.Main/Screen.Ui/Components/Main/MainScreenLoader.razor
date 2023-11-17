@@ -9,6 +9,7 @@
 
 @inject ICurrentConfigurationService ConfigService
 @inject NavigationManager NavManager
+@inject IPageQueueService PageQueue
 
 <MudStack Style="overflow: hidden" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Class="@($"h-100 {AnimatorClass}")">
     @switch (PageQueue.CurrentPage?.PageType)
@@ -29,9 +30,6 @@
 
 @code {
     
-    [Inject(Key = "main")]
-    private IPageQueueService PageQueue { get; set; }
-
     private PageModelPage _current = null!;
     
     private string AnimatorClass

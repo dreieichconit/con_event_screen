@@ -1,3 +1,6 @@
 ﻿namespace Screen.Api.Models;
 
-public class Player;
+public class Player
+{
+	
+}
