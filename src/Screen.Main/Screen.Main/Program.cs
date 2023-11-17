@@ -51,6 +51,14 @@ builder.Services.AddKeyedSingleton<IPageQueueService, MainPageQueueService>("mai
 builder.Services.AddSingleton<IMarqueeService, MarqueeService>();
 builder.Services.AddSingleton<IAlertService, AlertService>();
 
+builder.WebHost.ConfigureKestrel(
+	options =>
+	{
+		options.ListenAnyIP(1666);
+		options.ListenAnyIP(1667, configure => configure.UseHttps());
+	}
+);
+
 builder.Services.AddMudServices();
 
 var app = builder.Build();
