@@ -12,12 +12,16 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Screen.Api.Tests", "Screen.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Screen.Services", "Screen.Services\Screen.Services.csproj", "{3ECA7F53-A345-4BAA-B61E-D44369FB646E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "_build", "..\..\build\_build.csproj", "{4A9EBD83-6572-4915-A3C3-ED310684AFAE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4A9EBD83-6572-4915-A3C3-ED310684AFAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A9EBD83-6572-4915-A3C3-ED310684AFAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{95993FF1-C403-4576-AC4E-74A75469BE45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{95993FF1-C403-4576-AC4E-74A75469BE45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{95993FF1-C403-4576-AC4E-74A75469BE45}.Release|Any CPU.ActiveCfg = Release|Any CPU

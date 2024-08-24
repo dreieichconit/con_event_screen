@@ -1,93 +1,86 @@
-#region
-
 using Nuke.Common;
 using Nuke.Common.IO;
 using Nuke.Common.ProjectModel;
 using Nuke.Common.Tools.DotNet;
-using Nuke.Common.Utilities.Collections;
-using static Nuke.Common.IO.FileSystemTasks;
 using static Nuke.Common.Tools.DotNet.DotNetTasks;
-
-#endregion
 
 class Build : NukeBuild
 {
-	static DotNetPublishSettings pubSettings;
+	/// Support plugins are available for:
+	///   - JetBrains ReSharper        https://nuke.build/resharper
+	///   - JetBrains Rider            https://nuke.build/rider
+	///   - Microsoft VisualStudio     https://nuke.build/visualstudio
+	///   - Microsoft VSCode           https://nuke.build/vscode
+	public static int Main() => Execute<Build>(x => x.Publish);
+
+	[Solution(GenerateProjects = true)]  
+	readonly Solution Solution;
 
 	[Parameter("Configuration to build - Default is 'Debug' (local) or 'Release' (server)")]
 	readonly Configuration Configuration = Configuration.Release;
 
-	[Solution] readonly Solution Solution;
+	static AbsolutePath SourceDirectory => RootDirectory / "source";
 
-	AbsolutePath SourceDirectory => RootDirectory / "source";
+	static AbsolutePath TestsDirectory => RootDirectory / "tests";
 
-	AbsolutePath TestsDirectory => RootDirectory / "tests";
+	static AbsolutePath OutputDirectory => RootDirectory / "release";
 
-	AbsolutePath OutputDirectory => RootDirectory / "publish";
+	Target Clean => targetDefinition
+		=> targetDefinition
+			.Before(Restore)
+			.Executes(() =>
+				{
+					foreach (var path in SourceDirectory.GlobDirectories("**/bin", "**/obj"))
+					{
+						path.DeleteDirectory();
+					}
 
-	Target Clean => _ => _
-						.Before(Restore)
-						.Executes(() =>
-							{
-								SourceDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
-								TestsDirectory.GlobDirectories("**/bin", "**/obj").ForEach(DeleteDirectory);
-								EnsureCleanDirectory(OutputDirectory);
-							}
-						);
+					foreach (var path in TestsDirectory.GlobDirectories("**/bin", "**/obj"))
+					{
+						path.DeleteDirectory();
+					}
 
-	Target Restore => _ => _
-							.DependsOn(Clean)
-							.Executes(() =>
-								{
-									DotNetRestore(s => s
-										.SetProjectFile(Solution)
-									);
-								}
-							);
+					OutputDirectory.CreateOrCleanDirectory();
+				}
+			);
 
-	Target Compile => _ => _
-							.DependsOn(Restore)
-							.Executes(() =>
-								{
-									DotNetBuild(s => s
-													.SetProjectFile(Solution)
-													.SetConfiguration(Configuration)
-													.EnableNoRestore()
-									);
-								}
-							);
+	Target Restore => targetDefinition
+		=> targetDefinition
+			.DependsOn(Clean)
+			.Executes(() =>
+				{
+					DotNetRestore(s => s
+						.SetProjectFile(Solution)
+					);
+				}
+			);
 
-	Target Publish => _ => _
-							.DependsOn(Compile)
-							.Executes(() =>
-								{
-									DotNetPublish(s => s
-													.SetOutput(OutputDirectory)
-													.SetRuntime("ubuntu.20.04-x64")
-													.SetConfiguration(Configuration.Release)
-													.SetSelfContained(false)
-													.SetPublishTrimmed(false)
-									);
+	Target Compile => targetDefinition
+		=> targetDefinition
+			.DependsOn(Restore)
+			.Executes(() =>
+				{
+					DotNetBuild(s => s
+									.SetProjectFile(Solution)
+									.SetConfiguration(Configuration)
+									.EnableNoRestore()
+					);
+				}
+			);
 
-									// var rootPath = Path.Combine(Solution.Directory, "WebUI", "ApiDb.db");
-									//
-									// CopyFile(rootPath, Path.Combine(rootPath, OutputDirectory, "ApiDb.db"), FileExistsPolicy.Overwrite);
-								}
-							);
-
-	Target Upload => _ => _
-						.DependsOn(Publish)
-						.Executes(() =>
-							{
-								UploadHelper.UploadBuild(OutputDirectory);
-								UploadHelper.RestartApp();
-							}
-						);
-
-	/// Support plugins are available for:
-	/// - JetBrains ReSharper        https://nuke.build/resharper
-	/// - JetBrains Rider            https://nuke.build/rider
-	/// - Microsoft VisualStudio     https://nuke.build/visualstudio
-	/// - Microsoft VSCode           https://nuke.build/vscode
-	public static int Main() => Execute<Build>(x => x.Upload);
+	Target Publish => targetDefinition
+		=> targetDefinition
+			.DependsOn(Compile)
+			.Executes(() =>
+				{
+					DotNetPublish(s => s
+										.SetProject(Solution.Screen)
+										.SetOutput(OutputDirectory)
+										.SetConfiguration(Configuration.Release)
+										.SetPublishSingleFile(true)
+										.SetSelfContained(true)
+										.SetPublishTrimmed(false)
+					);
+				}
+			);
 }

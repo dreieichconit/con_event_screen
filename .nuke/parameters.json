@@ -1,4 +1,4 @@
 {
   "$schema": "./build.schema.json",
-  "Solution": "src/Screen.Main/Screen.Main.sln"
+  "Solution": "src/EventScreen/EventScreen.sln"
 }

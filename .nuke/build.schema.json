@@ -75,8 +75,7 @@
               "Clean",
               "Compile",
               "Publish",
-              "Restore",
-              "Upload"
+              "Restore"
             ]
           }
         },
@@ -93,8 +92,7 @@
               "Clean",
               "Compile",
               "Publish",
-              "Restore",
-              "Upload"
+              "Restore"
             ]
           }
         },
