@@ -1,0 +1,26 @@
+﻿<MudText Class="bar-font">
+    @Time
+</MudText>
+
+@code {
+
+    private string Time => DateTime.Now.ToString("HH:mm:ss");
+
+    private PeriodicTimer _timer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Task.Run(async () => await UpdateClock());
+    }
+
+    private async Task UpdateClock()
+    {
+        _timer = new PeriodicTimer(TimeSpan.FromSeconds(1));
+
+        while (await _timer.WaitForNextTickAsync())
+        {
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+    
+}

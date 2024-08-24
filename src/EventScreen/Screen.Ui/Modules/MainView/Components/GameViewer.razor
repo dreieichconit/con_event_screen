@@ -1,0 +1,166 @@
+﻿@using System.Globalization
+@using Screen.Api.Models
+@using Screen.Services.Interfaces
+@inject IConservicesGameService GameService;
+@inject IScrollManager ScrollManager;
+
+<style>
+    .mud-table-container{
+        max-height: 100%;
+        min-height: 0;
+    }
+    
+    thead{
+        color:  red !important;
+        filter: drop-shadow(0 1.5vh 1.5vh white);
+        border-bottom: 1px solid red;
+    }
+    
+    .highlight{
+        background: #55884422;
+    }
+    
+</style>
+
+<MudStack Class="flex-grow-1 h-100 overflow-hidden" Justify="Justify.SpaceBetween">
+    <MudDataGrid
+        T="Game"
+        Items="Games"
+        Filterable="false"
+        FixedHeader="true"
+        Style="max-height: 93% !important; overflow-x: scroll; height: 93%"
+        RowClassFunc="@RowClass">
+        <Columns>
+            <PropertyColumn
+                Title="Spielrunde"
+                Property="x => x.TitleString"
+                Class="row-font"
+                CellClass="title-cell"
+                HeaderStyle="@GetHeaderStyle(25)"/>
+            <PropertyColumn
+                Title="Tags"
+                Property="x => x.LabelText"
+                Class="row-font"
+                CellClass="cell-small"
+                HeaderStyle="@GetHeaderStyle(1)"/>
+            <PropertyColumn
+                Title="System"
+                Property="x => x.System"
+                Class="row-font"
+                CellClass="system-cell"
+                HeaderStyle="@GetHeaderStyle(15)"/>
+            <TemplateColumn
+                Title="Spieler"
+                Class="row-font"
+                HeaderStyle="@GetHeaderStyle(5)">
+                <CellTemplate>
+                    <MudText Color="GetColor(context.Item)" Class="cell" Style="GetStyle(context.Item)">@context.Item.Players.Count / @context.Item.MaxPlayers</MudText>
+                </CellTemplate>
+            </TemplateColumn>
+            <PropertyColumn
+                Title="Spielleiter"
+                Property="x => x.GameMasterString"
+                Class="row-font"
+                CellClass="cell"
+                HeaderStyle="@GetHeaderStyle(5)"/>
+            <PropertyColumn
+                Title="Tisch"
+                Property="x => x.TableText"
+                Class="row-font"
+                CellClass="cell"
+                HeaderStyle="@GetHeaderStyle(1)"/>
+            <PropertyColumn
+                Title="Startet"
+                Property="x => x.TimeUntilStartString"
+                Class="row-font"
+                CellClass="cell"
+                HeaderStyle="@GetHeaderStyle(15)"/>
+            <TemplateColumn Title="Um" CellClass="cell" Class="row-font" HeaderStyle="@GetHeaderStyle(12)">
+                <CellTemplate>
+                    <MudStack Spacing="0">
+                        <div>
+                            @context.Item.Start.ToString("dddd", new CultureInfo("de-de"))
+                        </div>
+                        <div>
+                            @context.Item.Start.ToString("HH:mm", new CultureInfo("de-de"))
+                        </div>
+                    </MudStack>
+                </CellTemplate>
+            </TemplateColumn>
+        </Columns>
+    </MudDataGrid>
+    <MudStack Class="w-100 px-5" Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.End" Style="height: 7% !important">
+        <MudText Typo="Typo.h3">@(_page + 1) / @(MaxPage)</MudText>
+    </MudStack>
+</MudStack>
+
+
+@code {
+
+    private List<Game> Games => GameService.GamesNotStarted;
+
+    private PeriodicTimer _timer;
+
+    private int _page = 0;
+
+    private int MaxPage => Games.Count > 20 ? 20 : Games.Count;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GameService.LoadGamesAsync();
+        Task.Run(async () => await UpdateData());
+        await InvokeAsync(StateHasChanged);
+    }
+    
+    private string RowClass(Game game, int i)
+    {
+        var rowClass = $"row_{i}";
+
+        if (i == _page)
+            rowClass += " highlight";
+
+        return rowClass;
+    }
+
+    private async Task UpdateData()
+    {
+        _timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
+
+        while (await _timer.WaitForNextTickAsync())
+        {
+            if (_page < MaxPage)
+                _page += 1;
+
+            else
+            {
+                await GameService.LoadGamesAsync();
+                _page = 0;
+            }
+
+            await ScrollManager.ScrollIntoViewAsync($".row_{_page}", ScrollBehavior.Smooth);
+            await InvokeAsync(StateHasChanged);
+        }
+    }
+
+    private Color GetColor(Game contextItem)
+    {
+        if (contextItem.Players.Count < contextItem.MaxPlayers)
+            return Color.Success;
+
+        return Color.Default;
+    }
+
+    private string GetStyle(Game contextItem)
+    {
+        if (contextItem.Players.Count < contextItem.MaxPlayers)
+            return "fw-bold";
+
+        return "";
+    }
+
+    private string GetHeaderStyle(int width)
+    {
+        return $"width: {width}% !important; min-width: {width}% !important; max-width: {width}% !important; padding-top: 2vh; padding-bottom: 2vh;";
+    }
+
+}

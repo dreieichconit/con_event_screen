@@ -1,0 +1,18 @@
+﻿@page "/"
+
+<MudStack Class="vh-100 vw-100 ">
+    <MudStack Class="w-100 px-5" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Row="true" Style="max-height: 13% !important">
+        <TitleComponent/>
+        <Clock/>
+    </MudStack>
+    <MudDivider Class="flex-grow-1" Style="max-height: 0.5vh !important"></MudDivider>
+    <MudStack Class="w-100 flex-grow-1" Style="height: 80% !important; max-height: 80% !important; min-height: 80% !important; overflow: hidden">
+        <GameViewer/>
+    </MudStack>
+</MudStack>
+
+@code {
+
+    
+
+}

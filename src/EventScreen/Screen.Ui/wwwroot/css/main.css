@@ -1,0 +1,25 @@
+.bar-font{
+    font-size: 10vh !important;
+}
+
+.title-cell{
+    font-size: 2.5vh !important;
+}
+
+.system-cell{
+    font-size: 2.5vh !important;
+}
+
+.cell{
+    font-size: 2.5vh !important;
+}
+
+.cell-small{
+    font-size: 2vh !important;
+}
+
+.row-font{
+    font-size: 3vh !important;
+    max-height: 1vh !important;
+    filter: drop-shadow(5px 0 1px rgba(0,0,0,0));
+}

@@ -22,3 +22,5 @@ src/Screen.Main/Screen.Main/wwwroot/img/upload/
 con-event-screen/con-event-screen/.DS_Store
 
 src/Screen.Main/Screen.Main/pass.txt
+
+*.DotSettings
