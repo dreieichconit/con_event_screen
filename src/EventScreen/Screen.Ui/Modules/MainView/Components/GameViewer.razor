@@ -12,7 +12,7 @@
     
     thead{
         color:  red !important;
-        filter: drop-shadow(0 1.5vh 1.5vh white);
+        filter: drop-shadow(0 1.5vh 1.5vh var(--mud-palette-background));
         border-bottom: 1px solid red;
     }
     
@@ -89,7 +89,8 @@
             </TemplateColumn>
         </Columns>
     </MudDataGrid>
-    <MudStack Class="w-100 px-5" Row="true" Justify="Justify.FlexEnd" AlignItems="AlignItems.End" Style="height: 7% !important">
+    <MudStack Class="w-100 px-5" Row="true" Justify="Justify.SpaceBetween" AlignItems="AlignItems.Center" Style="height: 7% !important">
+        <MudText Typo="Typo.h6">Bei Problemen mit der Anzeige bitte am Infostand melden.</MudText>
         <MudText Typo="Typo.h3">@(_page + 1) / @(MaxPage)</MudText>
     </MudStack>
 </MudStack>
@@ -103,7 +104,9 @@
 
     private int _page = 0;
 
-    private int MaxPage => Games.Count > 20 ? 20 : Games.Count;
+    private const int MaxScroll = 20;
+
+    private int MaxPage => Games.Count > MaxScroll ? MaxScroll : Games.Count;
 
     protected override async Task OnInitializedAsync()
     {
@@ -128,7 +131,7 @@
 
         while (await _timer.WaitForNextTickAsync())
         {
-            if (_page < MaxPage)
+            if (_page < MaxPage - 1)
                 _page += 1;
 
             else

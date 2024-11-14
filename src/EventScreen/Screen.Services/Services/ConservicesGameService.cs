@@ -14,7 +14,7 @@ public class ConservicesGameService(IConservicesGameRepository gameRepository) :
 
 	public async Task LoadGamesAsync()
 	{
-		Games = await gameRepository.GetAllGames("c0689650-3dbe-43c5-b9d0-7795b597774f");
+		Games = await gameRepository.GetAllGames("1aa9a5ca-aab3-41ec-8891-e09749992275");
 		GamesNotStarted = Games.Where(x => x.Start > DateTime.Now).ToList();
 	}
 }
